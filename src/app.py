@@ -5,10 +5,11 @@ from flask import render_template, request, redirect  # , jsonify, flash
 from config import app  # , test_env
 
 # from util import validate_todo
-from repositories.reference_repository import create_reference
+from repositories.reference_repository import Transaction
 
 counter = 0
 
+transaction = Transaction(database=SQLAlchemy(app))
 
 @app.route("/")
 def index():
@@ -27,7 +28,7 @@ def submit_data():
     journal = request.form.get("journal")
     year = request.form.get("year")
 
-    create_reference(key, author, title, journal, year)
+    transaction.insert_article(key, author, title, journal, year)
     return redirect("/")
 
 
