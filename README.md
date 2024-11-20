@@ -14,9 +14,9 @@ Komentorivillä tässä hakemistossa:
 
 ## Definition of Done
 ### Sprint 1:
-- vaaditut ominaisuudet on toteutettu ja testattu toimiviksi
-- ohjelma on asennettavissa ohjeiden avulla
-- dokumentaatio on riittävää (README:ssä on ohjeet, linkit backlogiin ja GHA workflowiin)
+- vaaditut ominaisuudet on toteutettu ja testattu toimiviksi.
+- ohjelma on asennettavissa ohjeiden avulla.
+- dokumentaatio on riittävää (README:ssä on ohjeet, linkit backlogiin ja GHA workflowiin).
 
 # Muuta tietoa
 
