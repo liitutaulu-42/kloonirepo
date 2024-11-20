@@ -1,4 +1,3 @@
-from config import db
 from sqlalchemy import text
 
 class Transaction:
@@ -6,7 +5,7 @@ class Transaction:
         self.db = database
 
     def insert_article(self, key, author, title, journal, year):
-        values = {"key": key, "author": author, "title": title
+        values = {"key": key, "author": author, "title": title,
                 "journal": journal, "year": year}
         sql = text(
             "INSERT INTO articles (key, author, title, journal, year) "
