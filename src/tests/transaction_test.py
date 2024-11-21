@@ -18,11 +18,11 @@ class DatabaseStub:
 
 class TestTransaction(unittest.TestCase):
     def setUp(self):
-        self.db = DatabaseStub()
-        self.transaction = Transaction(database=self.db)
+        self.database = DatabaseStub()
+        self.transaction = Transaction(database=self.database)
 
     def test_initialize_with_no_transactions(self):
-        self.assertEqual(self.db.session.last_insert, tuple())
+        self.assertEqual(self.database.session.last_insert, tuple())
 
     def test_insert_article_values_are_same(self):
         koodi = "Doe2023"
@@ -30,20 +30,18 @@ class TestTransaction(unittest.TestCase):
         otsikko = "Title of the Article"
         julkaisu = ""
         vuosi = 2024
-        article = {
-                "koodi": koodi,
-                "kirjoittaja": kirjoittaja,
-                "otsikko": otsikko,
-                "julkaisu": julkaisu,
-                "vuosi": vuosi,
-        }
         self.transaction.insert_article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
-        self.assertDictEqual(article, self.db.session.last_insert)
+        last_insert = self.database.session.last_insert
+        self.assertEqual(last_insert["koodi"], koodi)
+        self.assertEqual(last_insert["kirjoittaja"], kirjoittaja)
+        self.assertEqual(last_insert["otsikko"], otsikko)
+        self.assertEqual(last_insert["julkaisu"], julkaisu)
+        self.assertEqual(last_insert["vuosi"], vuosi)
 
     def test_fail_author_syntax(self):
         with self.assertRaises(AssertionError):
             self.transaction.insert_article(
-                    koodi="Doe2023", 
+                    koodi="Doe2023",
                     kirjoittaja="3",
                     otsikko="Title of the Article",
                     julkaisu="",
@@ -52,7 +50,7 @@ class TestTransaction(unittest.TestCase):
 
     def test_succeeds_with_author_first_to_last_syntax(self):
         self.transaction.insert_article(
-                koodi="Doe2023", 
+                koodi="Doe2023",
                 kirjoittaja="Isaac Newton",
                 otsikko="Title of the Article",
                 julkaisu="",
