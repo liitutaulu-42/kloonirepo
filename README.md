@@ -23,6 +23,7 @@ Projektin backlog [täältä](https://docs.google.com/spreadsheets/d/1kT_Y4y7KcN
 - `\q`
 
 - Tietokantasi on nyt alustettu ja voit käyttää ohjelmaa alla olevilla ohjeilla
+  
 ## Käyttöohjeet 21.11.2024
 Komentorivillä tässä hakemistossa:
 
@@ -31,15 +32,20 @@ Komentorivillä tässä hakemistossa:
 - `python3 src/index.py`
 - avaa sovellus [tästä](http://localhost:5001/)
 - kentät ovat muuten vapaita muotoilultaan, mutta kirjoittajatieto tulee merkitä pelkästään a-z/A-Z merkeillä ja vähintään yhdellä välilyönnillä ja vuosi pitää ilmoittaa kokonaislukuna
+
 ## Definition of Done
 
-### Sprint 1:
+### Koodin laatu
+- koodin pitäisi olla sellaista että sitä ei tarvitse enää muuttaa kyseisestä sprinttiä varten
+- koodi pitäisi olla pylintin mukaista
+- kaikki koodille tehdyt testit pitää mennä läpi
+- vaikeissa tapauksissa koodi selitetään kommenteilla, mutta koodin pitäisi olla helppolukuista
+- muuttujat ja nimet suomeksi
 
-- vaaditut ominaisuudet on toteutettu ja testattu toimiviksi
-- ohjelma on asennettavissa ohjeiden avulla
-- dokumentaatio on riittävää (README:ssä on ohjeet, linkit backlogiin ja GHA workflowiin)
+### Tehtävänhallinta
+- taskit ovat tunnistettavia nimeltä (kirjain + luku) mm. issuesseissa
 
-# Muuta tietoa
+## Muuta tietoa
 
 Lue flaskistä [täältä](https://ohjelmistotuotanto-hy.github.io/flask/) lisää.
 
