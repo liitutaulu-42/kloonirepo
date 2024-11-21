@@ -5,16 +5,12 @@ from config import app, db  # , test_env
 from repositories.reference_repository import Transaction
 
 
-counter = 0
-
 transaction = Transaction(database=db)
 
 
 @app.route("/")
 def index():
-    global counter
-    counter += 1
-    return render_template("index.html", counter=counter)
+    return render_template("index.html")
 
 
 @app.route("/submit", methods=["POST"])
