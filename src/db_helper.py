@@ -34,14 +34,13 @@ def setup_db():
     print(f"Creating table {table_name}")
     sql = text(
         f"CREATE TABLE {table_name} ("
-        "  key TEXT PRIMARY KEY,"
-        "  author TEXT NOT NULL,"
-        "  title TEXT NOT NULL,"
-        "  journal TEXT NOT NULL,"
-        "  year INT NOT NULL"
+        "  koodi TEXT PRIMARY KEY,"
+        "  kirjoittaja TEXT NOT NULL,"
+        "  otsikko TEXT NOT NULL,"
+        "  julkaisu TEXT NOT NULL,"
+        "  vuosi INT NOT NULL"
         ")"
     )
-
     db.session.execute(sql)
     db.session.commit()
 
