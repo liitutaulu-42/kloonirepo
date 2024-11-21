@@ -22,15 +22,15 @@ Projektin backlog [täältä](https://docs.google.com/spreadsheets/d/1kT_Y4y7KcN
   vuosi INTEGER NOT NULL);`
 - `\q`
 
-- Tietokantasi on nyt alustettu ja voit suorittaa ohjelman alla olevilla ohjeilla
-
+- Tietokantasi on nyt alustettu ja voit käyttää ohjelmaa alla olevilla ohjeilla
+## Käyttöohjeet 21.11.2024
 Komentorivillä tässä hakemistossa:
 
 - `poetry install`
 - `poetry shell`
 - `python3 src/index.py`
 - avaa sovellus [tästä](http://localhost:5001/)
-
+- kentät ovat muuten vapaita muotoilultaan, mutta kirjoittajatieto tulee merkitä pelkästään a-z/A-Z merkeillä ja vähintään yhdellä välilyönnillä ja vuosi pitää ilmoittaa kokonaislukuna
 ## Definition of Done
 
 ### Sprint 1:
