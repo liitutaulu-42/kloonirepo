@@ -25,36 +25,36 @@ class TestTransaction(unittest.TestCase):
         self.assertEqual(self.db.session.last_insert, tuple())
 
     def test_insert_article_values_are_same(self):
-        key = "Doe2023"
-        author = "Isaac Newton"
-        title = "Title of the Article"
-        journal = ""
-        year = 2024
+        koodi = "Doe2023"
+        kirjoittaja = "Isaac Newton"
+        otsikko = "Title of the Article"
+        julkaisu = ""
+        vuosi = 2024
         article = {
-                "key": key,
-                "author": author,
-                "title": title,
-                "journal": journal,
-                "year": year,
+                "koodi": koodi,
+                "kirjoittaja": kirjoittaja,
+                "otsikko": otsikko,
+                "julkaisu": julkaisu,
+                "vuosi": vuosi,
         }
-        self.transaction.insert_article(key, author, title, journal, year)
+        self.transaction.insert_article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
         self.assertDictEqual(article, self.db.session.last_insert)
 
     def test_fail_author_syntax(self):
         with self.assertRaises(AssertionError):
             self.transaction.insert_article(
-                    key="Doe2023", 
-                    author="3",
-                    title="Title of the Article",
-                    journal="",
-                    year=2024,
+                    koodi="Doe2023", 
+                    kirjoittaja="3",
+                    otsikko="Title of the Article",
+                    julkaisu="",
+                    vuosi=2024,
                     )
 
     def test_succeeds_with_author_first_to_last_syntax(self):
         self.transaction.insert_article(
-                key="Doe2023", 
-                author="Isaac Newton",
-                title="Title of the Article",
-                journal="",
-                year=2024,
+                koodi="Doe2023", 
+                kirjoittaja="Isaac Newton",
+                otsikko="Title of the Article",
+                julkaisu="",
+                vuosi=2024,
                 )
