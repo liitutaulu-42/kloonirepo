@@ -24,6 +24,22 @@ class TestTransaction(unittest.TestCase):
     def test_initialize_with_no_transactions(self):
         self.assertEqual(self.db.session.last_insert, tuple())
 
+    def test_insert_article_values_are_same(self):
+        key = "Doe2023"
+        author = "Isaac Newton"
+        title = "Title of the Article"
+        journal = ""
+        year = 2024
+        article = {
+                "key": key,
+                "author": author,
+                "title": title,
+                "journal": journal,
+                "year": year,
+        }
+        self.transaction.insert_article(key, author, title, journal, year)
+        self.assertDictEqual(article, self.db.session.last_insert)
+
     def test_fail_author_syntax(self):
         with self.assertRaises(AssertionError):
             self.transaction.insert_article(
