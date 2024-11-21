@@ -5,27 +5,16 @@ Suite Teardown   Close Browser
 Test Setup       Reset Todos
 
 *** Test Cases ***
-At start there are no todos
+Reference article input form can be opened
     Go To  ${HOME_URL}
-    Title Should Be  Todo app
-    Page Should Contain  things still unfinished: 0
+    Title Should Be  Lähdeviiteohjelma
+    Page Should Contain  Lähdeviiteohjelma
 
-After adding a todo, there is one
+User can input an atricle with a reference code, author, title, journal, and year
     Go To  ${HOME_URL}
-    Click Link  Create new todo
-    Input Text  content  Buy milk
-    Click Button  Create
-    Page Should Contain  things still unfinished: 1
-    Page Should Contain  Buy milk
-
-After adding two todos and marking one done, there is one unfinished
-    Go To  ${HOME_URL}
-    Click Link  Create new todo
-    Input Text  content  Buy milk
-    Click Button  Create
-    Click Link  Create new todo
-    Input Text  content  Clean house
-    Click Button  Create
-    Click Button  //li[div[contains(text(), 'Buy milk')]]/form/button
-    Page Should Contain  things still unfinished: 1
-    Page Should Contain  Buy milk, done
+    Input Text  koodi  Koodi1
+    Input Text  kirjoittaja  Kirjoittaja A
+    Input Text  otsikko  Otsikko1
+    Input Text  julkaisu  Julkaisu1
+    Input Text  vuosi  2024
+    Click Button  lähetä
