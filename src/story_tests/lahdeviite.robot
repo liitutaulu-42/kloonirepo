@@ -2,7 +2,6 @@
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
-Test Setup       Reset Todos
 
 *** Test Cases ***
 Reference article input form can be opened
