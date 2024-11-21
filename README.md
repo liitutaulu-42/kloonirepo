@@ -9,18 +9,18 @@ Projektin backlog [täältä](https://docs.google.com/spreadsheets/d/1kT_Y4y7KcN
 ## Ohjelman käynnistys 21.11.2024
 
 - Tee tietokanta oikeilla tauluilla ohjelmaa varten näitä komentoja käyttäen:
-- sudo -u postgres psql
+- `sudo -u postgres psql`
 - syötä salasanasi
-- ALTER USER postgres WITH ENCRYPTED PASSWORD 'postgres';
-- CREATE DATABASE postgres;
-- GRANT ALL PRIVILEGES ON DATABASE postgres TO postgres;
-- CREATE TABLE artikkelit (
+- `ALTER USER postgres WITH ENCRYPTED PASSWORD 'postgres';`
+- `CREATE DATABASE postgres;`
+- `GRANT ALL PRIVILEGES ON DATABASE postgres TO postgres;`
+- `CREATE TABLE artikkelit (
   koodi TEXT PRIMARY KEY,
   kirjoittaja TEXT NOT NULL,
   otsikko TEXT NOT NULL,
   julkaisu TEXT NOT NULL,
-  vuosi INTEGER NOT NULL);
-- \q
+  vuosi INTEGER NOT NULL);`
+- `\q`
 
 - Tietokantasi on nyt alustettu ja voit suorittaa ohjelman alla olevilla ohjeilla
 
@@ -29,6 +29,7 @@ Komentorivillä tässä hakemistossa:
 - `poetry install`
 - `poetry shell`
 - `python3 src/index.py`
+- avaa sovellus [tästä](http://localhost:5001/)
 
 ## Definition of Done
 
