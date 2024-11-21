@@ -9,7 +9,7 @@ Reference article input form can be opened
     Title Should Be  Lähdeviiteohjelma
     Page Should Contain  Lähdeviiteohjelma
 
-User can input an atricle with a reference code, author, title, journal, and year
+User can input an article with a reference code, author, title, journal, and year
     Go To  ${HOME_URL}
     Input Text  koodi  Koodi1
     Input Text  kirjoittaja  Kirjoittaja A
