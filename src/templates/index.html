@@ -7,11 +7,26 @@
 
 <form action="/submit" method="post">
     <ul>
-        <li><p><input type="text" name="koodi" placeholder="koodi"></p></li>
-        <li><p><input type="text" name="kirjoittaja" placeholder="kirjoittaja"></p></li>
-        <li><p><input type="text" name="otsikko" placeholder="otsikko"></p></li>
-        <li><p><input type="text" name="julkaisu" placeholder="julkaisu"></p></li>
-        <li><p><input type="text" name="vuosi" placeholder="vuosi"></p></li>
+        <li>
+            <label for="julkaisu">Julkaisu:</label>
+            <p><span><input type="text" id="julkaisu" name="julkaisu"></span></p>
+        </li>
+        <li>
+            <label for="koodi">Koodi:</label>
+            <p><span><input type="text" id="koodi" name="koodi"></span></p>
+        </li>
+        <li>
+            <label for="kirjoittaja">Kirjoittaja:</label>
+            <p><span><input type="text" id="kirjoittaja" name="kirjoittaja"></span></p>
+        </li>
+        <li>
+            <label for="otsikko">Otsikko:</label>
+            <p><span><input type="text" id="otsikko" name="otsikko"></span></p>
+        </li>
+        <li>
+            <label for="vuosi">Vuosi:</label>
+            <p><span><input type="text" id="vuosi" name="vuosi"></span></p>
+        </li>
     </ul>
     <p><button type="submit">lähetä</button></p>
 </form>
