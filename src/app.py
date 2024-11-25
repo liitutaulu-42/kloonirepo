@@ -7,6 +7,16 @@ from repositories.reference_repository import Transaction
 
 transaction = Transaction(database=db)
 
+#content = transaction.get_articles()
+#parsed_content = []
+#for row in content:
+#    parsed_content.append((
+#        row.koodi,
+#        row.kirjoittaja,
+#        row.otsikko,
+#        row.julkaisu,
+#        row.vuosi
+#        ))
 
 @app.route("/")
 def index():

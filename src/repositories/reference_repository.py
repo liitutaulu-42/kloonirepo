@@ -31,3 +31,9 @@ class Transaction:
         )
         self.database.session.execute(sql, values)
         self.database.session.commit()
+
+    def get_articles(self):
+        sql = text("SELECT * FROM artikkelit")
+        content = self.database.session.execute(sql)
+        self.database.session.commit()
+        return content
