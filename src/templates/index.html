@@ -6,29 +6,32 @@
 <h2>Lähdeviiteohjelma</h2>
 
 <form action="/submit" method="post">
-    <ul>
-        <li>
-            <label for="julkaisu">Julkaisu:</label>
-            <p><span><input type="text" id="julkaisu" name="julkaisu"></span></p>
-        </li>
-        <li>
-            <label for="koodi">Koodi:</label>
-            <p><span><input type="text" id="koodi" name="koodi"></span></p>
-        </li>
-        <li>
-            <label for="kirjoittaja">Kirjoittaja:</label>
-            <p><span><input type="text" id="kirjoittaja" name="kirjoittaja"></span></p>
-        </li>
-        <li>
-            <label for="otsikko">Otsikko:</label>
-            <p><span><input type="text" id="otsikko" name="otsikko"></span></p>
-        </li>
-        <li>
-            <label for="vuosi">Vuosi:</label>
-            <p><span><input type="text" id="vuosi" name="vuosi"></span></p>
-        </li>
-    </ul>
+    <p><input type="text" name="koodi" placeholder="koodi"></p>
+    <p><input type="text" name="kirjoittaja" placeholder="kirjoittaja"></p>
+    <p><input type="text" name="otsikko" placeholder="otsikko"></p>
+    <p><input type="text" name="julkaisu" placeholder="julkaisu"></p>
+    <p><input type="text" name="vuosi" placeholder="vuosi"></p>
     <p><button type="submit">lähetä</button></p>
 </form>
+
+
+<ul>
+    {% for artikkeli, koodi, kirjoittaja, otsikko, julkaisu, vuosi in content %}
+    <li>
+        <label>Artikkeli:</label>
+        <span>{{ artikkeli }},</span>
+        <label>Koodi:</label>
+        <span>{{ koodi }},</span>
+        <label>Kirjoittaja:</label>
+        <span>{{ kirjoittaja }},</span>
+        <label>Otsikko:</label>
+        <span>{{ otsikko }},</span>
+        <label>Julkaisu:</label>
+        <span>{{ julkaisu }},</span>
+        <label>Vuosi:</label>
+        <span>{{ vuosi }}</span>
+    </li>
+    {% endfor %}
+</ul>
 
 {% endblock %}

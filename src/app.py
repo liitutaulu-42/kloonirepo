@@ -20,7 +20,9 @@ transaction = Transaction(database=db)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    placeholder_content = [('artikkeli1', 'koodi1', 'nimi1', 'otsikko1', 'julkaisu1', 'vuosi1'), 
+                           ('artikkeli2', 'koodi2', 'nimi2', 'otsikko2', 'julkaisu2', 'vuosi2')]
+    return render_template("index.html", content=placeholder_content)
 
 
 @app.route("/submit", methods=["POST"])
