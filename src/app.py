@@ -20,7 +20,7 @@ transaction = Transaction(database=db)
 
 @app.route("/", methods=["GET"])
 def index():
-    placeholder_content = [('artikkeli1', 'koodi1', 'nimi1', 'otsikko1', 'julkaisu1', 'vuosi1'), 
+    placeholder_content = [('artikkeli1', 'koodi1', 'nimi1', 'otsikko1', 'julkaisu1', 'vuosi1'),
                            ('artikkeli2', 'koodi2', 'nimi2', 'otsikko2', 'julkaisu2', 'vuosi2')]
     return render_template("index.html", content=placeholder_content)
 
@@ -37,6 +37,6 @@ def submit_data():
 
     try:
         transaction.insert_article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
-    except Exception as error:
+    except AssertionError as error:
         flash(str(error))
     return redirect("/")
