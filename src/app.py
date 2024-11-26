@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash, jsonify
+from flask import render_template, request, redirect, flash, jsonify, Response
 from db_helper import reset_db
 from config import app, db, test_env
 
@@ -43,6 +43,25 @@ def submit_data():
     except AssertionError as error:
         flash(str(error))
     return redirect("/")
+
+
+@app.route("/bibtex", methods=["GET"])
+# lataa bibtex tiedoston
+def bibtex():
+    content = transaction.get_articles()
+    bibtex_content = ""
+    for ref in content:
+        ref_bibtex = f"""@article{{{ref[0]},
+    author = {{{ref[1]}}},
+    title = {{{ref[2]}}},
+    journal = {{{ref[3]}}},
+    year = {{{ref[4]}}},
+}}"""
+        bibtex_content += ref_bibtex + "\n\n"
+
+    response = Response(bibtex_content, mimetype='text/plain')
+    response.headers['Content-Disposition'] = 'attachment; filename="viitteet.bib"'
+    return response
 
 
 if test_env:
