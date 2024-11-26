@@ -1,15 +1,15 @@
-from flask import render_template, request, redirect, flash # , jsonify
-
-from config import app, db  # , test_env
+from flask import render_template, request, redirect, flash, jsonify
+from db_helper import reset_db
+from config import app, db, test_env
 
 from repositories.reference_repository import Transaction
 
 
 transaction = Transaction(database=db)
 
-#content = transaction.get_articles()
-#parsed_content = []
-#for row in content:
+# content = transaction.get_articles()
+# parsed_content = []
+# for row in content:
 #    parsed_content.append((
 #        row.koodi,
 #        row.kirjoittaja,
@@ -18,10 +18,13 @@ transaction = Transaction(database=db)
 #        row.vuosi
 #        ))
 
+
 @app.route("/", methods=["GET"])
 def index():
-    placeholder_content = [('artikkeli1', 'koodi1', 'nimi1', 'otsikko1', 'julkaisu1', 'vuosi1'),
-                           ('artikkeli2', 'koodi2', 'nimi2', 'otsikko2', 'julkaisu2', 'vuosi2')]
+    placeholder_content = [
+        ("artikkeli1", "koodi1", "nimi1", "otsikko1", "julkaisu1", "vuosi1"),
+        ("artikkeli2", "koodi2", "nimi2", "otsikko2", "julkaisu2", "vuosi2"),
+    ]
     return render_template("index.html", content=placeholder_content)
 
 
@@ -40,3 +43,11 @@ def submit_data():
     except AssertionError as error:
         flash(str(error))
     return redirect("/")
+
+
+if test_env:
+
+    @app.route("/reset_db")
+    def reset_database():
+        reset_db()
+        return jsonify({"message": "db reset"})
