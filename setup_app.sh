@@ -5,8 +5,8 @@ echo "Setup app"
 FILE=.env
 if [ ! -f "$FILE" ]; then
 	echo "$FILE tiedosto puuttuu, luodaan"
-	echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres\n" >$FILE
-	echo "TEST_ENV=true" >$FILE
+	echo -e "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres\n" >$FILE
+	echo -e "TEST_ENV=true\n" >$FILE
 	echo "SECRET_KEY='sekret'" >$FILE
 fi
 
