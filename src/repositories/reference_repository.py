@@ -1,4 +1,4 @@
-from re import search
+from re import search, match
 from sqlalchemy import text
 
 
@@ -44,6 +44,10 @@ class Transaction:
                 "Syötetty kirjoittaja oli viallinen"
         assert len(vuosi) == 4 and all(map(str.isdigit, vuosi)), \
                 "Syotetty vuosi oli viallinen"
+
+        järjestys = ""
+        otsikon_alku_sana = match("^[A-Za-z]+", otsikko)
+        luotu_koodi = f"{otsikon_alku_sana}-{vuosi}-{järjestys}"
 
         values = {
             "koodi": koodi,
