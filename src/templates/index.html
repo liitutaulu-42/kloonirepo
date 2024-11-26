@@ -5,6 +5,14 @@
 
 <h2>Lähdeviiteohjelma</h2>
 
+{% with viestit = get_flashed_messages() %}
+  {% if viestit %}
+    {% for viesti in viestit %}
+    <b>{{ viesti }}</b>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 <form action="/submit" method="post">
     <p><input type="text" name="koodi" placeholder="koodi"></p>
     <p><input type="text" name="kirjoittaja" placeholder="kirjoittaja"></p>

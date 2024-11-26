@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect  # , jsonify, flash
+from flask import render_template, request, redirect, flash # , jsonify
 
 from config import app, db  # , test_env
 
@@ -18,7 +18,7 @@ transaction = Transaction(database=db)
 #        row.vuosi
 #        ))
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def index():
     placeholder_content = [('artikkeli1', 'koodi1', 'nimi1', 'otsikko1', 'julkaisu1', 'vuosi1'), 
                            ('artikkeli2', 'koodi2', 'nimi2', 'otsikko2', 'julkaisu2', 'vuosi2')]
@@ -35,5 +35,8 @@ def submit_data():
     julkaisu = request.form.get("julkaisu")
     vuosi = request.form.get("vuosi")
 
-    transaction.insert_article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
+    try:
+        transaction.insert_article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
+    except Exception as error:
+        flash(str(error))
     return redirect("/")
