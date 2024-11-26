@@ -36,7 +36,15 @@ class Transaction:
         return search(all_kirjoittajat, kirjoittaja) is not None
 
     def insert_article(self, koodi, kirjoittaja, otsikko, julkaisu, vuosi):
-        assert self.is_kirjoittaja_valid(kirjoittaja), "Inputted kirjoittaja is invalid"
+        # artikkelin otsikkoa ja julkaisua ei voi valitoida, koska
+        # ne voidaan täyttää vapaassa muodossa. Olisipa kiva, jos sais
+        # väärinkirjoitussuojaa...
+
+        assert self.is_kirjoittaja_valid(kirjoittaja), \
+                "Syötetty kirjoittaja oli viallinen"
+        assert len(vuosi) == 4 and all(map(str.isdigit, vuosi)), \
+                "Syotetty vuosi oli viallinen"
+
         values = {
             "koodi": koodi,
             "kirjoittaja": kirjoittaja,
