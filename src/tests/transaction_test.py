@@ -13,7 +13,6 @@ class TestTransaction(unittest.TestCase):
 
     def test_insert_article_values_are_same(self):
         self.transaction.insert_article(
-                koodi="Doe2023",
                 kirjoittaja="Isaac Newton",
                 otsikko="Title of the Article",
                 julkaisu="",
@@ -30,7 +29,6 @@ class TestTransaction(unittest.TestCase):
     def test_fail_author_syntax(self):
         with self.assertRaises(AssertionError):
             self.transaction.insert_article(
-                    koodi="Doe2023",
                     kirjoittaja="3",
                     otsikko="Title of the Article",
                     julkaisu="",

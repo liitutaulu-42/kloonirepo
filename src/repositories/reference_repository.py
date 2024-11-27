@@ -35,7 +35,7 @@ class Transaction:
         all_kirjoittajat = f"^{both_formats}( AND {both_formats})*$"
         return search(all_kirjoittajat, kirjoittaja) is not None
 
-    def insert_article(self, koodi, kirjoittaja, otsikko, julkaisu, vuosi):
+    def insert_article(self, kirjoittaja, otsikko, julkaisu, vuosi):
         # artikkelin otsikkoa ja julkaisua ei voi valitoida, koska
         # ne voidaan täyttää vapaassa muodossa. Olisipa kiva, jos sais
         # väärinkirjoitussuojaa...
@@ -45,12 +45,12 @@ class Transaction:
         assert len(vuosi) == 4 and all(map(str.isdigit, vuosi)), \
                 "Syotetty vuosi oli viallinen"
 
-        järjestys = ""
-        otsikon_alku_sana = match("^[A-Za-z]+", otsikko)
-        luotu_koodi = f"{otsikon_alku_sana}-{vuosi}-{järjestys}"
+        nimen_alku_sana = match("^[A-Za-z]+", kirjoittaja).group()
+        otsikon_alku_sana = match("^[A-Za-z]+", otsikko).group()
+        luotu_koodi = f"{nimen_alku_sana}-{otsikon_alku_sana}-{vuosi}"
 
         values = {
-            "koodi": koodi,
+            "koodi": luotu_koodi,
             "kirjoittaja": kirjoittaja,
             "otsikko": otsikko,
             "julkaisu": julkaisu,

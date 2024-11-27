@@ -30,14 +30,13 @@ def index():
 # lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
 # ja työntää ne tietokantaan ja lopuksi palauttaa sivuston aloitussivulle
 def submit_data():
-    koodi = request.form.get("koodi")
     kirjoittaja = request.form.get("kirjoittaja")
     otsikko = request.form.get("otsikko")
     julkaisu = request.form.get("julkaisu")
     vuosi = request.form.get("vuosi")
 
     try:
-        transaction.insert_article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
+        transaction.insert_article(kirjoittaja, otsikko, julkaisu, vuosi)
     except AssertionError as error:
         flash(str(error))
     return redirect("/")
