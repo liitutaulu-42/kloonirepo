@@ -1,7 +1,7 @@
-from config import db, app
 from sqlalchemy import text
+from config import db, app
 
-table_name = "artikkelit"
+TABLE_NAME = "artikkelit"
 
 
 def table_exists(name):
@@ -18,22 +18,22 @@ def table_exists(name):
 
 
 def reset_db():
-    print(f"Clearing contents from table {table_name}")
-    sql = text(f"DELETE FROM {table_name}")
+    print(f"Clearing contents from table {TABLE_NAME}")
+    sql = text(f"DELETE FROM {TABLE_NAME}")
     db.session.execute(sql)
     db.session.commit()
 
 
 def setup_db():
-    if table_exists(table_name):
-        print(f"Table {table_name} exists, dropping")
-        sql = text(f"DROP TABLE {table_name}")
+    if table_exists(TABLE_NAME):
+        print(f"Table {TABLE_NAME} exists, dropping")
+        sql = text(f"DROP TABLE {TABLE_NAME}")
         db.session.execute(sql)
         db.session.commit()
 
-    print(f"Creating table {table_name}")
+    print(f"Creating table {TABLE_NAME}")
     sql = text(
-        f"CREATE TABLE {table_name} ("
+        f"CREATE TABLE {TABLE_NAME} ("
         "  koodi TEXT PRIMARY KEY,"
         "  kirjoittaja TEXT NOT NULL,"
         "  otsikko TEXT NOT NULL,"
