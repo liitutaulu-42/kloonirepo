@@ -23,20 +23,20 @@
 
 
 <ul>
-    {% for artikkeli, koodi, kirjoittaja, otsikko, julkaisu, vuosi in content %}
+    {% for artikkeli in content %}
     <li>
-        <label>Artikkeli:</label>
-        <span>{{ artikkeli }},</span>
+        <label>Muoto:</label>
+        <span>Artikkeli,</span>
         <label>Koodi:</label>
-        <span>{{ koodi }},</span>
+        <span>{{ artikkeli.koodi }},</span>
         <label>Kirjoittaja:</label>
-        <span>{{ kirjoittaja }},</span>
+        <span>{{ artikkeli.kirjoittaja }},</span>
         <label>Otsikko:</label>
-        <span>{{ otsikko }},</span>
+        <span>{{ artikkeli.otsikko }},</span>
         <label>Julkaisu:</label>
-        <span>{{ julkaisu }},</span>
+        <span>{{ artikkeli.julkaisu }},</span>
         <label>Vuosi:</label>
-        <span>{{ vuosi }}</span>
+        <span>{{ artikkeli.vuosi }}</span>
     </li>
     {% endfor %}
 </ul>

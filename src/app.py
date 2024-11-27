@@ -10,20 +10,7 @@ transaction = Transaction(database=db)
 @app.route("/", methods=["GET"])
 def index():
     articles = transaction.get_articles()
-    parsed_content = []
-    for article in articles:
-        parsed_content.append((
-            article[0],
-            article[1],
-            article[2],
-            article[3],
-            article[4]
-            ))
-    placeholder_content = [
-        ("artikkeli1", "koodi1", "nimi1", "otsikko1", "julkaisu1", "vuosi1"),
-        ("artikkeli2", "koodi2", "nimi2", "otsikko2", "julkaisu2", "vuosi2"),
-    ]
-    return render_template("index.html", content=placeholder_content)
+    return render_template("index.html", content=articles)
 
 
 @app.route("/submit", methods=["POST"])
@@ -45,16 +32,7 @@ def submit_data():
 @app.route("/bibtex", methods=["GET"])
 # lataa bibtex tiedoston
 def bibtex():
-    content = transaction.get_articles()
-    bibtex_content = ""
-    for ref in content:
-        ref_bibtex = f"""@article{{{ref[0]},
-    author = {{{ref[1]}}},
-    title = {{{ref[2]}}},
-    journal = {{{ref[3]}}},
-    year = {{{ref[4]}}},
-}}"""
-        bibtex_content += ref_bibtex + "\n\n"
+    bibtex_content = transaction.get_bibtex()
 
     response = Response(bibtex_content, mimetype='text/plain')
     response.headers['Content-Disposition'] = 'attachment; filename="viitteet.bib"'

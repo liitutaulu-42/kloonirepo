@@ -1,6 +1,9 @@
+from collections import namedtuple
 from re import search, match
 from sqlalchemy import text
 
+Article = namedtuple("Article",
+        ["koodi", "kirjoittaja", "otsikko", "julkaisu", "vuosi"])
 
 class Transaction:
     def __init__(self, database):
@@ -49,22 +52,30 @@ class Transaction:
         otsikon_alku_sana = match("^[A-Za-z]+", otsikko).group()
         luotu_koodi = f"{nimen_alku_sana}-{otsikon_alku_sana}-{vuosi}"
 
-        values = {
-            "koodi": luotu_koodi,
-            "kirjoittaja": kirjoittaja,
-            "otsikko": otsikko,
-            "julkaisu": julkaisu,
-            "vuosi": vuosi,
-        }
+        artikkeli = Article(luotu_koodi, kirjoittaja, otsikko, julkaisu, vuosi)
         sql = text(
             "INSERT INTO artikkelit (koodi, kirjoittaja, otsikko, julkaisu, vuosi) "
             "VALUES (:koodi, :kirjoittaja, :otsikko, :julkaisu, :vuosi)"
         )
-        self.database.session.execute(sql, values)
+        self.database.session.execute(sql, artikkeli._asdict())
         self.database.session.commit()
 
     def get_articles(self):
         sql = text("SELECT * FROM artikkelit")
         content = self.database.session.execute(sql)
         self.database.session.commit()
-        return content
+        return [Article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
+                for koodi, kirjoittaja, otsikko, julkaisu, vuosi in content]
+
+    def get_bibtex(self):
+        content = self.get_articles()
+        bibtex_content = ""
+        for ref in content:
+            ref_bibtex = f"""@article{{{ref.koodi},
+    author = {{{ref.kirjoittaja}}},
+    title = {{{ref.otsikko}}},
+    journal = {{{ref.julkaisu}}},
+    year = {{{ref.vuosi}}},
+}}"""
+            bibtex_content += ref_bibtex + "\n\n"
+        return bibtex_content
