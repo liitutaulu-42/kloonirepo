@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, flash, jsonify, Response
 from db_helper import reset_db
 from config import app, db, test_env
 
-from repositories.reference_repository import Transaction
+from transaction import Transaction
 
 
 transaction = Transaction(database=db)
