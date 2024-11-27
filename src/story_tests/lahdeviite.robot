@@ -11,7 +11,6 @@ Reference article input form can be opened
 
 User can input an article with a reference code, author, title, journal, and year
     Go To  ${HOME_URL}
-    Input Text  koodi  Koodi1
     Input Text  kirjoittaja  Kirjoittaja A
     Input Text  otsikko  Otsikko1
     Input Text  julkaisu  Julkaisu1
