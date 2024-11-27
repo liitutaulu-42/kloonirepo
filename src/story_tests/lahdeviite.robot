@@ -16,3 +16,8 @@ User can input an article with a reference code, author, title, journal, and yea
     Input Text  julkaisu  Julkaisu1
     Input Text  vuosi  2024
     Click Button  lähetä
+    Page Should Contain  Kirjoittaja-Otsikko-2024
+
+User can see a previously input article listed on home page
+    Go To  ${HOME_URL}
+    Page Should Contain  Kirjoittaja-Otsikko-2024
