@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, ANY
 
-from repositories.reference_repository import Transaction
+from transaction import Transaction
 
 class TestTransaction(unittest.TestCase):
     def setUp(self):
