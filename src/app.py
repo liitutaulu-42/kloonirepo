@@ -7,20 +7,18 @@ from repositories.reference_repository import Transaction
 
 transaction = Transaction(database=db)
 
-# content = transaction.get_articles()
-# parsed_content = []
-# for row in content:
-#    parsed_content.append((
-#        row.koodi,
-#        row.kirjoittaja,
-#        row.otsikko,
-#        row.julkaisu,
-#        row.vuosi
-#        ))
-
-
 @app.route("/", methods=["GET"])
 def index():
+    articles = transaction.get_articles()
+    parsed_content = []
+    for article in articles:
+        parsed_content.append((
+            article[0],
+            article[1],
+            article[2],
+            article[3],
+            article[4]
+            ))
     placeholder_content = [
         ("artikkeli1", "koodi1", "nimi1", "otsikko1", "julkaisu1", "vuosi1"),
         ("artikkeli2", "koodi2", "nimi2", "otsikko2", "julkaisu2", "vuosi2"),
