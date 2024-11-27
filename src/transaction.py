@@ -2,7 +2,7 @@ from collections import namedtuple
 from re import search, match
 from sqlalchemy import text
 
-Article = namedtuple("Article",
+Artikkeli = namedtuple("Artikkeli",
         ["koodi", "kirjoittaja", "otsikko", "julkaisu", "vuosi"])
 
 class Transaction:
@@ -10,7 +10,7 @@ class Transaction:
         self.database = database
 
     @staticmethod
-    def is_kirjoittaja_valid(kirjoittaja):
+    def kelpaako_kirjoittaja(kirjoittaja):
         # Kirjoittajakentällä on esitysmuodot:
         # 1. {Etunimet Sukunimi}
         # 2. {Sukunimi, Etunimet}
@@ -22,28 +22,28 @@ class Transaction:
 
         # nimi esitetään aakkosisena merkkijonona, koska en löytänyt toista
         # ohjeistusta
-        name = "[A-Za-z]+"
+        nimi = "[A-Za-z]+"
         # tosiaan montaa etunimeä tuetaan ja se vaikutti olevan ainoastaan
         # etunimet väleillä erotettuina
-        firstnames = f"{name}( {name})*"
+        etunimet = f"{nimi}( {nimi})*"
         # tämä käsittelee 1. esitysmuodon
-        first_last = f"{firstnames} {name}"
+        etunimet_sukunimi = f"{etunimet} {nimi}"
         # tämä loput eli 2. ja 3. esitysmuodot.
         # liite esiintyy välillä, niin se on helppo kuvata regexillä
-        comma_separated = f"{name}(, {name})?, {firstnames}"
+        pilkulla_jaetut = f"{nimi}(, {nimi})?, {etunimet}"
         # sitten yhdistetään esiintymismuodot
-        both_formats = f"({first_last}|{comma_separated})"
+        molemmat_saannot = f"({etunimet_sukunimi}|{pilkulla_jaetut})"
         # lopuksi tarkistamme, että koko merkkijono tottelee
         # yksittäisen tai monen kirjoittajan syotettä.
-        all_kirjoittajat = f"^{both_formats}( AND {both_formats})*$"
-        return search(all_kirjoittajat, kirjoittaja) is not None
+        koko_tarkistus = f"^{molemmat_saannot}( AND {molemmat_saannot})*$"
+        return search(koko_tarkistus, kirjoittaja) is not None
 
     def insert_article(self, kirjoittaja, otsikko, julkaisu, vuosi):
         # artikkelin otsikkoa ja julkaisua ei voi valitoida, koska
         # ne voidaan täyttää vapaassa muodossa. Olisipa kiva, jos sais
         # väärinkirjoitussuojaa...
 
-        assert self.is_kirjoittaja_valid(kirjoittaja), \
+        assert self.kelpaako_kirjoittaja(kirjoittaja), \
                 "Syötetty kirjoittaja oli viallinen"
         assert len(vuosi) == 4 and all(map(str.isdigit, vuosi)), \
                 "Syotetty vuosi oli viallinen"
@@ -52,7 +52,7 @@ class Transaction:
         otsikon_alku_sana = match("^[A-Za-z]+", otsikko).group()
         luotu_koodi = f"{nimen_alku_sana}-{otsikon_alku_sana}-{vuosi}"
 
-        artikkeli = Article(luotu_koodi, kirjoittaja, otsikko, julkaisu, vuosi)
+        artikkeli = Artikkeli(luotu_koodi, kirjoittaja, otsikko, julkaisu, vuosi)
         sql = text(
             "INSERT INTO artikkelit (koodi, kirjoittaja, otsikko, julkaisu, vuosi) "
             "VALUES (:koodi, :kirjoittaja, :otsikko, :julkaisu, :vuosi)"
@@ -64,8 +64,7 @@ class Transaction:
         sql = text("SELECT * FROM artikkelit")
         content = self.database.session.execute(sql)
         self.database.session.commit()
-        return [Article(koodi, kirjoittaja, otsikko, julkaisu, vuosi)
-                for koodi, kirjoittaja, otsikko, julkaisu, vuosi in content]
+        return list(map(Artikkeli._make, content))
 
     def get_bibtex(self):
         content = self.get_articles()
@@ -75,7 +74,7 @@ class Transaction:
     author = {{{ref.kirjoittaja}}},
     title = {{{ref.otsikko}}},
     journal = {{{ref.julkaisu}}},
-    year = {{{ref.vuosi}}},
+    year = {ref.vuosi}
 }}"""
             bibtex_content += ref_bibtex + "\n\n"
         return bibtex_content
