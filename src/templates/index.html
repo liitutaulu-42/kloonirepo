@@ -13,25 +13,26 @@
   {% endif %}
 {% endwith %}
 <aside>
-    
-    <ul>
+  <div class="rullaava-lista">
+    <div class="rivi">
+      <div class="sarake">Muoto</div>
+      <div class="sarake">Koodi</div>
+      <div class="sarake">Kirjoittaja</div>
+      <div class="sarake">Otsikko</div>
+      <div class="sarake">Vuosi</div>
+    </div>
       {% for artikkeli in content %}
-      <li>
-          <label>Muoto:</label>
-          <span>Artikkeli,</span>
-          <label>Koodi:</label>
-          <span>{{ artikkeli.koodi }},</span>
-          <label>Kirjoittaja:</label>
-          <span>{{ artikkeli.kirjoittaja }},</span>
-          <label>Otsikko:</label>
-          <span>{{ artikkeli.otsikko }},</span>
-          <label>Julkaisu:</label>
-          <span>{{ artikkeli.julkaisu }},</span>
-          <label>Vuosi:</label>
-          <span>{{ artikkeli.vuosi }}</span>
-      </li>
+    <div class="rivi">
+      <div class="sarake">Artikkeli</div>
+      <div class="sarake">{{ artikkeli.koodi }}</div>
+      <div class="sarake">{{ artikkeli.kirjoittaja }}</div>
+      <div class="sarake">{{ artikkeli.otsikko }}</div>
+      <div class="sarake">{{ artikkeli.julkaisu }}</div>
+      <div class="sarake">{{ artikkeli.vuosi }}</div>
+    </div>
       {% endfor %}
-    </ul>
+  </div>
+
   </aside>
 
 
