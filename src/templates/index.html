@@ -12,36 +12,38 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+<aside>
+    
+    <ul>
+      {% for artikkeli in content %}
+      <li>
+          <label>Muoto:</label>
+          <span>Artikkeli,</span>
+          <label>Koodi:</label>
+          <span>{{ artikkeli.koodi }},</span>
+          <label>Kirjoittaja:</label>
+          <span>{{ artikkeli.kirjoittaja }},</span>
+          <label>Otsikko:</label>
+          <span>{{ artikkeli.otsikko }},</span>
+          <label>Julkaisu:</label>
+          <span>{{ artikkeli.julkaisu }},</span>
+          <label>Vuosi:</label>
+          <span>{{ artikkeli.vuosi }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
 
-<form action="/submit" method="post">
+
+  <form action="/submit" method="post">
     <p><input type="text" name="kirjoittaja" placeholder="kirjoittaja"></p>
     <p><input type="text" name="otsikko" placeholder="otsikko"></p>
     <p><input type="text" name="julkaisu" placeholder="julkaisu"></p>
     <p><input type="text" name="vuosi" placeholder="vuosi"></p>
     <p><button type="submit">lähetä</button></p>
-</form>
+  </form>
 
-
-<ul>
-    {% for artikkeli in content %}
-    <li>
-        <label>Muoto:</label>
-        <span>Artikkeli,</span>
-        <label>Koodi:</label>
-        <span>{{ artikkeli.koodi }},</span>
-        <label>Kirjoittaja:</label>
-        <span>{{ artikkeli.kirjoittaja }},</span>
-        <label>Otsikko:</label>
-        <span>{{ artikkeli.otsikko }},</span>
-        <label>Julkaisu:</label>
-        <span>{{ artikkeli.julkaisu }},</span>
-        <label>Vuosi:</label>
-        <span>{{ artikkeli.vuosi }}</span>
-    </li>
-    {% endfor %}
-</ul>
-
-
+  
 <form action="/bibtex" method="get">
   <button type="submit">lataa BibTeX</button>
 </form>
