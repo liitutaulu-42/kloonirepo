@@ -34,7 +34,7 @@ class TestTransaction(unittest.TestCase):
                     julkaisu="",
                     vuosi="2024",
                     )
-            
+
     # alla oleva testi ei toimi tällä hetkellä
     #
     # def test_insert_article_values_same_as_bibtex(self):
