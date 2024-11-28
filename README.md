@@ -22,9 +22,9 @@ Komentorivillä tässä hakemistossa:
 
 - koodin pitäisi olla sellaista että sitä ei tarvitse enää muuttaa kyseisestä sprinttiä varten
 - koodi pitäisi olla pylintin mukaista
+- laadun varmistavia yksikköttestejä pitää olla sopivissa määrin (85% coverage) 
 - kaikki koodille tehdyt testit pitää mennä läpi
 - vaikeissa tapauksissa koodi selitetään kommenteilla, mutta koodin pitäisi olla helppolukuista
-- muuttujat ja nimet suomeksi
 
 ### Tehtävänhallinta
 
