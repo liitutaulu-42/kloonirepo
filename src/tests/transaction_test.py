@@ -35,17 +35,20 @@ class TestTransaction(unittest.TestCase):
                     vuosi="2024",
                     )
 
-    # alla oleva testi ei toimi tällä hetkellä
-    #
-    # def test_insert_article_values_same_as_bibtex(self):
-    #     self.transaction.insert_article(
-    #             kirjoittaja="Kirjoittaja Nimi",
-    #             otsikko="Testi Otsikko",
-    #             julkaisu="",
-    #             vuosi="2024",
-    #     )
+    def test_insert_article_values_same_as_bibtex(self):
 
-    #     normal_article = self.transaction.get_articles()
-    #     bibtex_article = self.transaction.get_bibtex()
+        self.database.session.execute.return_value = [("testi","Kirjoittaja Nimi",
+    "Testi Otsikko","1","2024",)]
 
-    #     self.assertEqual(normal_article, bibtex_article)
+        bibtex = self.transaction.get_bibtex()
+
+        expected_bibtex = """@article{testi,
+        title = {Kirjoittaja Nimi},
+        author = {Testi Otsikko},
+        year = 2022,
+        journal = {1}
+    }
+
+    """
+
+        self.assertEqual(bibtex, expected_bibtex)
