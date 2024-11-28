@@ -1,0 +1,12 @@
+testataan bibtex tiedostoa bibtexiä käyttävään ohjelmaan
+
+vapaavalintaiset kentät lisätyksi(prio 2 !)
+syötettyjen arvojen muokkaus(prio 4) ja poistaminen(prio 3)
+muitakin liitetyyppejä kuin pelkät artikkelit(vähintään yksi toinen prio 1)
+lista ja lomakkeen lisäys eri sivuille
+käyttäjälle palaute onnistuneesta lisäämisestä
+
+ehdotuksia:
+  käytetään omia brancheja, jotta main pysyy kunnossa kaiken aikaa
+  kenttien muotoilu siistimmän näköiseksi
+  
