@@ -34,3 +34,19 @@ class TestTransaction(unittest.TestCase):
                     julkaisu="",
                     vuosi="2024",
                     )
+
+
+    # alla oleva testi ei toimi tällä hetkellä
+    #
+    # def test_insert_article_values_same_as_bibtex(self):
+    #     self.transaction.insert_article(
+    #             kirjoittaja="Kirjoittaja Nimi",
+    #             otsikko="Testi Otsikko",
+    #             julkaisu="",
+    #             vuosi="2024",
+    #     )
+
+    #     normal_article = self.transaction.get_articles()
+    #     bibtex_article = self.transaction.get_bibtex()
+
+    #     self.assertEqual(normal_article, bibtex_article)
