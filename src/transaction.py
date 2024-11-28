@@ -36,35 +36,61 @@ class Transaction:
         # lopuksi tarkistamme, että koko merkkijono tottelee
         # yksittäisen tai monen kirjoittajan syotettä.
         koko_tarkistus = f"^{molemmat_saannot}( AND {molemmat_saannot})*$"
-        return search(koko_tarkistus, kirjoittaja) is not None
+        assert search(koko_tarkistus, kirjoittaja) is not None, \
+                "Syötetty kirjoittaja oli viallinen"
+
 
     def insert_article(self, kirjoittaja, otsikko, julkaisu, vuosi):
-        # artikkelin otsikkoa ja julkaisua ei voi valitoida, koska
-        # ne voidaan täyttää vapaassa muodossa. Olisipa kiva, jos sais
-        # väärinkirjoitussuojaa...
-
-        assert self.kelpaako_kirjoittaja(kirjoittaja), \
-                "Syötetty kirjoittaja oli viallinen"
+        self.kelpaako_kirjoittaja(kirjoittaja)
         assert len(vuosi) == 4 and all(map(str.isdigit, vuosi)), \
                 "Syotetty vuosi oli viallinen"
 
         nimen_alku_sana = match("^[A-Za-z]+", kirjoittaja).group()
         otsikon_alku_sana = match("^[A-Za-z]+", otsikko).group()
-        luotu_koodi = f"{nimen_alku_sana}-{otsikon_alku_sana}-{vuosi}"
+        genkey = f"{nimen_alku_sana}-{otsikon_alku_sana}-{vuosi}"
 
-        artikkeli = Artikkeli(luotu_koodi, kirjoittaja, otsikko, julkaisu, vuosi)
         sql = text(
-            "INSERT INTO artikkelit (koodi, kirjoittaja, otsikko, julkaisu, vuosi) "
-            "VALUES (:koodi, :kirjoittaja, :otsikko, :julkaisu, :vuosi)"
+            "INSERT INTO Entries (entry, key)"
+            "VALUES ('article', :id)"
+            "RETURNING id;"
         )
-        self.database.session.execute(sql, artikkeli._asdict())
+        eid = self.database.session.execute(sql, {"id": genkey}).first()[0]
+
+        sql = text(
+            "INSERT INTO Fields (owner_id, field, value) VALUES"
+            "  (:id, 'author', :author),"
+            "  (:id, 'title', :title),"
+            "  (:id, 'journal', :journal),"
+            "  (:id, 'year', :year);"
+        )
+        self.database.session.execute(sql, {
+            "id": eid,
+            "author": kirjoittaja,
+            "title": otsikko,
+            "journal": julkaisu,
+            "year": vuosi,
+        })
         self.database.session.commit()
 
     def get_articles(self):
-        sql = text("SELECT * FROM artikkelit")
-        content = self.database.session.execute(sql)
-        self.database.session.commit()
-        return list(map(Artikkeli._make, content))
+        ret = []
+        sql = text(
+            "SELECT id, key "
+            "FROM Entries "
+            "WHERE entry='article' "
+        )
+        for eid, key in self.database.session.execute(sql):
+            sql = text(
+                "SELECT value "
+                "FROM Fields "
+                "WHERE owner_id=:id "
+                "ORDER BY field "
+            )
+            fields = self.database.session.execute(sql, {"id": eid})
+            author, journal, title, year = tuple(field[0] for field in fields)
+            ret.append(Artikkeli(key, author, title, journal, year))
+
+        return ret
 
     def get_bibtex(self):
         content = self.get_articles()
