@@ -70,11 +70,11 @@ class Transaction:
         content = self.get_articles()
         bibtex_content = ""
         for ref in content:
-            ref_bibtex = f"""@article{{{ref.koodi},
-    author = {{{ref.kirjoittaja}}},
-    title = {{{ref.otsikko}}},
-    journal = {{{ref.julkaisu}}},
-    year = {ref.vuosi}
-}}"""
+            ref_bibtex = f"@article{{{ref.koodi},\n" \
+                f"\tauthor = {{{ref.kirjoittaja}}},\n" \
+                f"\ttitle = {{{ref.otsikko}}},\n" \
+                f"\tjournal = {{{ref.julkaisu}}},\n" \
+                f"\tyear = {ref.vuosi}\n" \
+                "}"
             bibtex_content += ref_bibtex + "\n\n"
         return bibtex_content

@@ -42,13 +42,11 @@ class TestTransaction(unittest.TestCase):
 
         bibtex = self.transaction.get_bibtex()
 
-        expected_bibtex = """@article{testi,
-        title = {Kirjoittaja Nimi},
-        author = {Testi Otsikko},
-        year = 2022,
-        journal = {1}
-    }
-
-    """
+        expected_bibtex = "@article{testi,\n" \
+            "\tauthor = {Kirjoittaja Nimi},\n" \
+            "\ttitle = {Testi Otsikko},\n" \
+            "\tjournal = {1},\n" \
+            "\tyear = 2024\n" \
+            "}\n\n"
 
         self.assertEqual(bibtex, expected_bibtex)
