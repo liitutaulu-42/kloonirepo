@@ -2,7 +2,7 @@
 
 #### Liitetaulukko esimerkki
 
-| ID | Reference | Key |
+| ID | Entry | Key |
 | --- | --- | --- |
 | 0 | article | A1 |
 | 1 | book | B1 |
@@ -25,7 +25,7 @@ Tämä rajoite on taulukon kentillä: `UNIQUE (Owner_id, Field)`
 - `/form`: sivu tuetuille liitteiden lomakkeille
   - tuo AssertionError viestin käyttäjälle näkyviin tarvittaessa
 - `/submit`: käsittelee lomakkeen tiedot ja lähettää ne tietokantaan
-- `/references`: sivu kaikista liitteistä
+- `/entries`: sivu kaikista liitteistä
 - `/delete-form`: liitteistä valitsemis lomake, jossa valitaan poistettavat
 - `/submit-delete`: käsittelee poistamislomakkeen
 
