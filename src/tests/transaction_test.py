@@ -49,4 +49,3 @@ class TestTransaction(unittest.TestCase):
     #     bibtex_article = self.transaction.get_bibtex()
 
     #     self.assertEqual(normal_article, bibtex_article)
-    
