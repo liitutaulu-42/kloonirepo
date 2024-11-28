@@ -1,7 +1,7 @@
 # Lähdeviiteohjelma
 
-[![GHA workflow badge](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/ci.yaml/badge.svg)](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions)
-![Pylint workflow badge](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/pylint.yml/badge.svg)
+[![GHA workflow badge](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/ci.yaml/badge.svg)](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/ci.yaml)
+[![Pylint workflow badge](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/pylint.yml/badge.svg)](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/pylint.yml)
 
 Asiakas määritteet [täältä](https://ohjelmistotuotanto-hy.github.io/speksi/)
 
