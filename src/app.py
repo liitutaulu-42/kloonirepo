@@ -17,10 +17,10 @@ def index():
 # lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
 # ja työntää ne tietokantaan ja lopuksi palauttaa sivuston aloitussivulle
 def submit_data():
-    kirjoittaja = request.form.get("kirjoittaja")
-    otsikko = request.form.get("otsikko")
-    julkaisu = request.form.get("julkaisu")
-    vuosi = request.form.get("vuosi")
+    kirjoittaja = request.form.get("author")
+    otsikko = request.form.get("title")
+    julkaisu = request.form.get("journal")
+    vuosi = request.form.get("year")
 
     try:
         transaction.insert_article(kirjoittaja, otsikko, julkaisu, vuosi)
@@ -37,6 +37,13 @@ def bibtex():
     response = Response(bibtex_content, mimetype='text/plain')
     response.headers['Content-Disposition'] = 'attachment; filename="viitteet.bib"'
     return response
+
+
+@app.route("/form", methods=["GET"])
+# sivu lomakkeille
+def form():
+    form_type = request.args.get("type", "article")
+    return render_template("form.html", form_type=form_type)
 
 
 if test_env:

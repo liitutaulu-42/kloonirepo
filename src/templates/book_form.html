@@ -1,0 +1,12 @@
+<h3>Lisää kirja</h3>
+
+<form action="/submit" method="post">
+  <input type="hidden" name="reference" value="book">
+  <h4>Pakolliset kentät:</h4>
+  <p><input type="text" name="title" placeholder="otsikko" required></p>
+  <p><input type="text" name="author" placeholder="kirjoittaja" required></p>
+  <p><input type="text" name="year" placeholder="vuosi" required></p>
+  <p><input type="text" name="publisher" placeholder="julkaisija" required></p>
+  <p><input type="text" name="address" placeholder="julkaisijan postiosoite" required></p>
+  <p><button type="submit">Lähetä</button></p>
+</form>

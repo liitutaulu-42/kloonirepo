@@ -3,7 +3,7 @@
 {% block title %}Lähdeviiteohjelma{% endblock %}
 {% block body %}
 
-<h2>Lähdeviiteohjelma</h2>
+<h1>Lähdeviiteohjelma</h1>
 
 {% with viestit = get_flashed_messages() %}
   {% if viestit %}
@@ -12,6 +12,7 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+
 <aside>
   <div class="rullaava-lista">
     <div class="rivi">
@@ -33,21 +34,26 @@
     </div>
       {% endfor %}
   </div>
+</aside>
 
-  </aside>
+<br>
 
+<h2>Lisää uusi viite</h2>
+<form action="/form" method="get">
+  <label for="form-selector">Valitse viitetyyppi:</label>
+    <select id="form-selector" name="type">
+      <option value="article">Artikkeli</option>
+      <option value="book">Kirja</option>
+    </select>
+    <button type="submit">Siirry lomakkeelle</button>
+  </div>
+</form>
 
-  <form action="/submit" method="post">
-    <p><input type="text" name="kirjoittaja" placeholder="kirjoittaja"></p>
-    <p><input type="text" name="otsikko" placeholder="otsikko"></p>
-    <p><input type="text" name="julkaisu" placeholder="julkaisu"></p>
-    <p><input type="text" name="vuosi" placeholder="vuosi"></p>
-    <p><button type="submit">lähetä</button></p>
-  </form>
+<br>
 
-  
+<h2>Lataa viitteet BibTeX-tiedostona</h2>
 <form action="/bibtex" method="get">
-  <button type="submit">lataa BibTeX</button>
+  <button type="submit">Lataa BibTeX</button>
 </form>
 
 {% endblock %}

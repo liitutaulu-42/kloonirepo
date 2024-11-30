@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Lisää viite{% endblock %}
+{% block body %}
+
+{% with viestit = get_flashed_messages() %}
+  {% if viestit %}
+    {% for viesti in viestit %}
+    <b>{{ viesti }}</b>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<h2>Valitse lisättävän viitteen tyyppi</h2>
+
+<div>
+  <form action="/form" method="get">
+    <button type="submit" name="type" value="article">Artikkeli</button>
+    <button type="submit" name="type" value="book">Kirja</button>
+  </form>
+</div>
+
+<hr>
+
+<div id="form-container">
+  {% if form_type == "article" %}
+    {% include 'article_form.html' %}
+  {% elif form_type == "book" %}
+    {% include 'book_form.html' %}
+  {% endif %}
+</div>
+
+<br>
+
+<p><a href="/">Takaisin etusivulle</a></p>
+
+{% endblock %}
+
+
+
+
