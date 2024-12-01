@@ -1,16 +1,11 @@
-from collections import namedtuple
 from re import search, match
-from sqlalchemy import text
-
-Artikkeli = namedtuple("Artikkeli",
-        ["koodi", "kirjoittaja", "otsikko", "julkaisu", "vuosi"])
 
 class Transaction:
-    def __init__(self, database):
-        self.database = database
+    def __init__(self, db_handle):
+        self.db_handle = db_handle
 
     @staticmethod
-    def kelpaako_kirjoittaja(kirjoittaja):
+    def validate_author(author):
         # Kirjoittajakentällä on esitysmuodot:
         # 1. {Etunimet Sukunimi}
         # 2. {Sukunimi, Etunimet}
@@ -22,90 +17,66 @@ class Transaction:
 
         # nimi esitetään aakkosisena merkkijonona, koska en löytänyt toista
         # ohjeistusta
-        nimi = "[A-Za-z]+"
+        name = "[A-Za-z]+"
         # tosiaan montaa etunimeä tuetaan ja se vaikutti olevan ainoastaan
         # etunimet väleillä erotettuina
-        etunimet = f"{nimi}( {nimi})*"
+        first_names = f"{name}( {name})*"
         # tämä käsittelee 1. esitysmuodon
-        etunimet_sukunimi = f"{etunimet} {nimi}"
+        firsts_last = f"{first_names} {name}"
         # tämä loput eli 2. ja 3. esitysmuodot.
         # liite esiintyy välillä, niin se on helppo kuvata regexillä
-        pilkulla_jaetut = f"{nimi}(, {nimi})?, {etunimet}"
+        comma_separated = f"{name}(, {name})?, {first_names}"
         # sitten yhdistetään esiintymismuodot
-        molemmat_saannot = f"({etunimet_sukunimi}|{pilkulla_jaetut})"
+        both_patterns = f"({firsts_last}|{comma_separated})"
         # lopuksi tarkistamme, että koko merkkijono tottelee
         # yksittäisen tai monen kirjoittajan syotettä.
-        koko_tarkistus = f"^{molemmat_saannot}( AND {molemmat_saannot})*$"
-        assert search(koko_tarkistus, kirjoittaja) is not None, \
+        whole_match = f"^{both_patterns}( AND {both_patterns})*$"
+        assert search(whole_match, author) is not None, \
                 "Syötetty kirjoittaja oli viallinen"
 
-
-    def insert_article(self, kirjoittaja, otsikko, julkaisu, vuosi):
-        self.kelpaako_kirjoittaja(kirjoittaja)
-        assert len(vuosi) == 4 and all(map(str.isdigit, vuosi)), \
+    @staticmethod
+    def validate_year(year):
+        assert len(year) == 4 and all(map(str.isdigit, year)), \
                 "Syotetty vuosi oli viallinen"
 
-        nimen_alku_sana = match("^[A-Za-z]+", kirjoittaja).group()
-        otsikon_alku_sana = match("^[A-Za-z]+", otsikko).group()
-        genkey = f"{nimen_alku_sana}-{otsikon_alku_sana}-{vuosi}"
+    @staticmethod
+    def generate_key(author, title, year):
+        name_start = match("^[A-Za-z]+", author).group()
+        title_start = match("^[A-Za-z]+", title).group()
+        return f"{name_start}-{title_start}-{year}"
 
-        sql = text(
-            "INSERT INTO Entries (entry, key)"
-            "VALUES ('article', :id)"
-            "RETURNING id;"
-        )
-        eid = self.database.session.execute(sql, {"id": genkey}).first()[0]
+    def insert_article(self, author, title, journal, year):
+        self.validate_author(author)
+        self.validate_year(year)
 
-        sql = text(
-            "INSERT INTO Fields (owner_id, field, value) VALUES"
-            "  (:id, 'author', :author),"
-            "  (:id, 'title', :title),"
-            "  (:id, 'journal', :journal),"
-            "  (:id, 'year', :year);"
-        )
-        self.database.session.execute(sql, {
-            "id": eid,
-            "author": kirjoittaja,
-            "title": otsikko,
-            "journal": julkaisu,
-            "year": vuosi,
-        })
-        self.database.session.commit()
+        genkey = self.generate_key(author, title, year)
+
+        eid = self.db_handle.create_entry("article", genkey)
+
+        self.db_handle.add_field(eid, "author", author)
+        self.db_handle.add_field(eid, "title", title)
+        self.db_handle.add_field(eid, "journal", journal)
+        self.db_handle.add_field(eid, "year", year)
+
+        self.db_handle.commit()
 
     def get_articles(self):
-        ret = []
-        sql = text(
-            "SELECT id, key "
-            "FROM Entries "
-            "WHERE entry='article' "
-        )
-        for eid, key in self.database.session.execute(sql):
-            sql = text(
-                "SELECT field, value "
-                "FROM Fields "
-                "WHERE owner_id=:id;"
-            )
-            fields = self.database.session.execute(sql, {"id": eid})
-            article_dict = dict(fields)
-
-            author = article_dict["author"]
-            journal = article_dict["journal"]
-            title = article_dict["title"]
-            year = article_dict["year"]
-
-            ret.append(Artikkeli(key, author, title, journal, year))
-
-        return ret
+        for eid, key in self.db_handle.get_references("article"):
+            article_fields = self.db_handle.get_fields_of(eid)
+            author = article_fields["author"]
+            journal = article_fields["journal"]
+            title = article_fields["title"]
+            year = article_fields["year"]
+            yield key, author, title, journal, year
 
     def get_bibtex(self):
-        content = self.get_articles()
         bibtex_content = ""
-        for ref in content:
-            ref_bibtex = f"@article{{{ref.koodi},\n" \
-                f"\tauthor = {{{ref.kirjoittaja}}},\n" \
-                f"\ttitle = {{{ref.otsikko}}},\n" \
-                f"\tjournal = {{{ref.julkaisu}}},\n" \
-                f"\tyear = {ref.vuosi}\n" \
+        for key, author, title, journal, year in self.get_articles():
+            ref_bibtex = f"@article{{{key},\n" \
+                f"\tauthor = {{{author}}},\n" \
+                f"\ttitle = {{{title}}},\n" \
+                f"\tjournal = {{{journal}}},\n" \
+                f"\tyear = {year}\n" \
                 "}"
             bibtex_content += ref_bibtex + "\n\n"
         return bibtex_content

@@ -3,13 +3,14 @@ from db_helper import reset_db
 from config import app, db, test_env
 
 from transaction import Transaction
+from db_handle import DatabaseHandle
 
 
-transaction = Transaction(database=db)
+transaction = Transaction(DatabaseHandle(database=db))
 
 @app.route("/", methods=["GET"])
 def index():
-    articles = transaction.get_articles()
+    articles = list(transaction.get_articles())
     return render_template("index.html", content=articles)
 
 
