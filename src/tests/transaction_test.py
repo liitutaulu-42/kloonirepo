@@ -41,7 +41,10 @@ class TestTransaction(unittest.TestCase):
     def test_insert_article_values_same_as_bibtex(self):
         self.database.session.execute.side_effect = [
                 ((0, "testi"),),
-                (("Kirjoittaja Nimi",), ("J",), ("Testi Otsikko",), ("2024",)),
+                (("author", "Kirjoittaja Nimi"),
+                 ("journal", "J"),
+                 ("title", "Testi Otsikko"),
+                 ("year", "2024")),
         ]
 
         bibtex = self.transaction.get_bibtex()

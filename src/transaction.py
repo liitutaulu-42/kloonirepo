@@ -81,13 +81,18 @@ class Transaction:
         )
         for eid, key in self.database.session.execute(sql):
             sql = text(
-                "SELECT value "
+                "SELECT field, value "
                 "FROM Fields "
-                "WHERE owner_id=:id "
-                "ORDER BY field "
+                "WHERE owner_id=:id;"
             )
             fields = self.database.session.execute(sql, {"id": eid})
-            author, journal, title, year = tuple(field[0] for field in fields)
+            article_dict = dict(fields)
+
+            author = article_dict["author"]
+            journal = article_dict["journal"]
+            title = article_dict["title"]
+            year = article_dict["year"]
+
             ret.append(Artikkeli(key, author, title, journal, year))
 
         return ret
