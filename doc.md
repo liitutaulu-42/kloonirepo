@@ -74,7 +74,18 @@ Kentissä erillinen lomakkeen vinkki suomeksi ja hakunimike englanniksi
 - `get_bibtex()` palauttaa bibtex -merkkijonon
 - `delete_reference(id)` poistaa liitetaulukon id alkion ja liitekenttätaulukon kaikki owner_id arvot
 
-#### Yksikkötestit
+#### DatabaseHandle metodit
+- `commit()` vahvistaa tietokantaan lisätyt tiedot
+- `create_entry(entry, key)` lisää tietokantaan tiedot uudesta liitteestä
+  - entry viittaa siihen minkälainen liite on kyseessä (book/article)
+  - palauttaa `eid` -tunnisteen, jolla voi lisätä kenttiä liitteelle
+- `add_field(eid, field, value)` lisää liitteelle kentän ja sille arvon
+- `get_references(reference)` palauttaa jonkilaiset liitteet
+  - reference viittaa siihen minkälainen liitteet halutaan (book/article)
+  - palauttaa jokaisesta liitteestä tunnisteen ja koodin
+- `get_fields_of(eid)` palauttaa sanakirjana kentät, jotka kuuluvat liitteelle
+
+#### Yksikkötestit (WIP)
 
 - `generate_key` ulostulo on muotoa "nimi-sana-vuosi", jossa nimi on kirjoittajan eka sana ja sana otsiskon eka sana
 - `validate_author` sopivalla nimellä ei nouse Exception:iä, väärällä nousee
