@@ -37,7 +37,7 @@ class Transaction:
     @staticmethod
     def validate_year(year):
         assert len(year) == 4 and all(map(str.isdigit, year)), \
-                "Syotetty vuosi oli viallinen"
+                "Syötetty vuosi oli viallinen"
 
     @staticmethod
     def generate_key(author, title, year):
