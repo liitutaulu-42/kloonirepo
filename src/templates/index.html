@@ -14,26 +14,26 @@
 {% endwith %}
 
 <aside>
-  <div class="rullaava-lista">
-    <div class="rivi">
-      <div class="sarake">Liite</div>
-      <div class="sarake">Koodi</div>
-      <div class="sarake">Kirjoittaja</div>
-      <div class="sarake">Otsikko</div>
-      <div class="sarake">Julkaisu</div>
-      <div class="sarake">Vuosi</div>
-    </div>
-      {% for key, author, journal, title, year   in content %}
-    <div class="rivi">
-      <div class="sarake">Artikkeli</div>
-      <div class="sarake">{{ key }}</div>
-      <div class="sarake">{{ author }}</div>
-      <div class="sarake">{{ title }}</div>
-      <div class="sarake">{{ journal }}</div>
-      <div class="sarake">{{ year }}</div>
-    </div>
-      {% endfor %}
-  </div>
+  <table>
+    <tr>
+      <th>Liite</th>
+      <th>Koodi</th>
+      <th>Kirjoittaja</th>
+      <th>Otsikko</th>
+      <th>Julkaisu</th>
+      <th>Vuosi</th>
+    </tr>
+    {% for key, author, journal, title, year in content %}
+    <tr>
+      <td>Artikkeli</td>
+      <td>{{ key }}</td>
+      <td>{{ author }}</td>
+      <td>{{ title }}</td>
+      <td>{{ journal }}</td>
+      <td>{{ year }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 </aside>
 
 <br>

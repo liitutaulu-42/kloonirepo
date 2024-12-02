@@ -10,26 +10,26 @@
         padding-right: 15px;
         float: right;
       }
-      .rullaava-lista {
-        max-height: 300px;
-        overflow-y: auto;
-        border: 10px solid #ccc;
-        padding: 10px;
+      table {
+	width: 70%;
+	max-height: 300px;
+	overflow-y: auto;
+	border-collapse: collapse;
+	border: 10px solid #ccc;
+	padding: 10px;
       }
-
-      .rivi {
-        display: flex;
-        justify-content: space-between;
-        margin-inline: 5px;
+      td, th {
+	text-align: left;
+	padding: 5px;
+	box-sizing: border-box;
+	min-width: 20px;
+	max-width: 200px;
+      }
+      tr {
         border: 1px solid #ddd;
       }
-
-      .sarake {
-        align-items: baseline;
-        padding: 5px;
-        box-sizing: border-box;
-        min-width: 20px;
-        max-width:200px;
+      tr:nth-child(even) {
+	background-color: #eee;
       }
     </style>
 
