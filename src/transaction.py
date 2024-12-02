@@ -92,6 +92,25 @@ class Transaction:
             year = article_fields["year"]
             yield key, author, title, journal, year
 
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def insert_book(self,
+                    author,
+                    title,
+                    year,
+                    publisher,
+                    address
+                    ):
+        genkey = self.generate_key(author, title, year)
+        entry_id = self.db_handle.create_entry("book", genkey)
+
+        self.db_handle.add_field(entry_id, "author", author)
+        self.db_handle.add_field(entry_id, "title", title)
+        self.db_handle.add_field(entry_id, "year", year)
+        self.db_handle.add_field(entry_id, "publisher", publisher)
+        self.db_handle.add_field(entry_id, "address", address)
+
+        self.db_handle.commit()
+
     def get_bibtex(self):
         bibtex_content = ""
         for key, author, title, journal, year in self.get_articles():

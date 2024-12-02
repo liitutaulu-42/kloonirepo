@@ -37,7 +37,18 @@ def submit_data():
             flash(str(error))
             return redirect("/form?type=article")
     elif reference == "book":
-        pass
+        try:
+            transaction.insert_book(
+                author=request.form.get("author"),
+                title=request.form.get("title"),
+                year=request.form.get("year"),
+                publisher=request.form.get("publisher"),
+                address=request.form.get("address")
+            )
+            return redirect("/")
+        except AssertionError as error:
+            flash(str(error))
+            return redirect("/form?type=book")
     return redirect("/")
 
 
