@@ -2,3 +2,28 @@
 
 {% block title %}Poista liitteitä{% endblock %}
 {% block body %}
+
+<aside>
+    <div class="rullaava-lista">
+      <div class="rivi">
+        <div class="sarake">Liite</div>
+        <div class="sarake">Koodi</div>
+        <div class="sarake">Kirjoittaja</div>
+        <div class="sarake">Otsikko</div>
+        <div class="sarake">Julkaisu</div>
+        <div class="sarake">Vuosi</div>
+      </div>
+        {% for key, author, journal, title, year   in content %}
+      <div class="rivi">
+        <div class="sarake"><input id="artikkeli" type="checkbox"><label for="artikkeli"></label>Artikkeli</div>
+        <div class="sarake">{{ key }}</div>
+        <div class="sarake">{{ author }}</div>
+        <div class="sarake">{{ title }}</div>
+        <div class="sarake">{{ journal }}</div>
+        <div class="sarake">{{ year }}</div>
+      </div>
+        {% endfor %}
+    </div>
+  </aside>
+
+{% endblock %}

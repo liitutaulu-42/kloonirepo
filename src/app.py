@@ -49,7 +49,8 @@ def form():
 @app.route("/delete-form", methods=["GET"])
 # delete-form sivu
 def delete_form():
-    return render_template("delete-form.html")
+    articles = list(transaction.get_articles())
+    return render_template("delete-form.html", content=articles)
 
 if test_env:
 
