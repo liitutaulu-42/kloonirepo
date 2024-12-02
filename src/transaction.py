@@ -45,9 +45,22 @@ class Transaction:
         title_start = match("^[A-Za-z]+", title).group()
         return f"{name_start}-{title_start}-{year}"
 
-    def insert_article(self, author, title, journal, year):
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def insert_article(self,
+            author,
+            title,
+            journal,
+            year,
+            month="",
+            volume="",
+            number="",
+            pages="",
+            note="",
+            ):
         self.validate_author(author)
         self.validate_year(year)
+
+        # tähän valinnaiset; tarkista ennen, että kuitenkin täytetty
 
         genkey = self.generate_key(author, title, year)
 
@@ -57,6 +70,16 @@ class Transaction:
         self.db_handle.add_field(eid, "title", title)
         self.db_handle.add_field(eid, "journal", journal)
         self.db_handle.add_field(eid, "year", year)
+        if month != "":
+            self.db_handle.add_field(eid, "month", month)
+        if volume != "":
+            self.db_handle.add_field(eid, "volume", volume)
+        if number != "":
+            self.db_handle.add_field(eid, "number", number)
+        if pages != "":
+            self.db_handle.add_field(eid, "pages", pages)
+        if note != "":
+            self.db_handle.add_field(eid, "note", note)
 
         self.db_handle.commit()
 

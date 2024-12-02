@@ -18,15 +18,26 @@ def index():
 # lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
 # ja työntää ne tietokantaan ja lopuksi palauttaa sivuston aloitussivulle
 def submit_data():
-    kirjoittaja = request.form.get("author")
-    otsikko = request.form.get("title")
-    julkaisu = request.form.get("journal")
-    vuosi = request.form.get("year")
-
-    try:
-        transaction.insert_article(kirjoittaja, otsikko, julkaisu, vuosi)
-    except AssertionError as error:
-        flash(str(error))
+    reference = request.form.get("reference")
+    if reference == "article":
+        try:
+            transaction.insert_article(
+                    author=request.form.get("author"),
+                    title=request.form.get("title"),
+                    journal=request.form.get("journal"),
+                    year=request.form.get("year"),
+                    volume=request.form.get("volume"),
+                    month=request.form.get("month"),
+                    number=request.form.get("number"),
+                    pages=request.form.get("pages"),
+                    note=request.form.get("note"),
+                    )
+            return redirect("/")
+        except AssertionError as error:
+            flash(str(error))
+            return redirect("/form?type=article")
+    elif reference == "book":
+        pass
     return redirect("/")
 
 
