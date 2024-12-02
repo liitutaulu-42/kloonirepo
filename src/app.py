@@ -46,6 +46,10 @@ def form():
     form_type = request.args.get("type", "article")
     return render_template("form.html", form_type=form_type)
 
+@app.route("/delete-form", methods=["GET"])
+# delete-form sivu
+def delete_form():
+    return render_template("delete-form.html")
 
 if test_env:
 
