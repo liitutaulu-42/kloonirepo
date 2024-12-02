@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock, ANY, call
+from unittest.mock import Mock, call
 
 from transaction import Transaction
 
