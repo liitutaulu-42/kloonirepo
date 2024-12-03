@@ -101,6 +101,9 @@ class Transaction:
         genkey = self.generate_key(author, title, year)
         entry_id = self.db_handle.create_entry("book", genkey)
 
+        self.validate_author(author)
+        self.validate_year(year)
+
         self.db_handle.add_field(entry_id, "author", author)
         self.db_handle.add_field(entry_id, "title", title)
         self.db_handle.add_field(entry_id, "year", year)
