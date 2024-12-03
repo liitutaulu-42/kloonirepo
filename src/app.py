@@ -34,6 +34,7 @@ def submit_data():
                 pages=request.form.get("pages"),
                 note=request.form.get("note"),
             )
+            flash("Artikkeli lisätty onnistuneesti")
             return redirect("/")
         except AssertionError as error:
             flash(str(error))
@@ -47,6 +48,7 @@ def submit_data():
                 publisher=request.form.get("publisher"),
                 address=request.form.get("address"),
             )
+            flash("Kirja lisätty onnistuneesti")
             return redirect("/")
         except AssertionError as error:
             flash(str(error))
