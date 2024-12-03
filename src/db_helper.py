@@ -1,8 +1,8 @@
 from sqlalchemy import text
 from config import db, app
 
-ENTRIES_TABLE = "Entries"
-FIELD_TABLE = "Fields"
+ENTRIES_TABLE = "entries"
+FIELD_TABLE = "fields"
 
 
 def table_exists(name):
@@ -18,6 +18,9 @@ def table_exists(name):
     return result.fetchall()[0][0]
 
 
+# SELECT EXISTS ( SELECT 1 FROM pg_catalog.pg_type WHERE typname = 'entry_t' );
+
+
 def reset_table(name):
     print(f"Clearing contents from table {name}")
     sql = text(f"DELETE FROM {name}")
@@ -29,6 +32,7 @@ def reset_db():
     reset_table(FIELD_TABLE)
     db.session.commit()
 
+
 def drop_last_session_table(name):
     if table_exists(name):
         print(f"Table {name} exists, dropping")
@@ -36,10 +40,20 @@ def drop_last_session_table(name):
         db.session.execute(sql)
         db.session.commit()
 
-def setup_db():
-    drop_last_session_table(ENTRIES_TABLE)
-    drop_last_session_table(FIELD_TABLE)
 
+def drop_old_types():
+    sql = text("DROP TYPE IF EXISTS entry_t;")
+    db.session.execute(sql)
+    db.session.commit()
+    sql = text("DROP TYPE IF EXISTS field_t;")
+    db.session.execute(sql)
+    db.session.commit()
+
+
+def setup_db():
+    drop_last_session_table(FIELD_TABLE)
+    drop_last_session_table(ENTRIES_TABLE)
+    drop_old_types()
     print("Creating entry enum type")
     sql = text("CREATE TYPE entry_t AS ENUM ('article', 'book');")
     db.session.execute(sql)
