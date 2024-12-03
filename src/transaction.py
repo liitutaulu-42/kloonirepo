@@ -109,6 +109,17 @@ class Transaction:
 
         self.db_handle.commit()
 
+    def get_books(self):
+        for eid, key in self.db_handle.get_references("book"):
+            book_fields = self.db_handle.get_fields_of(eid)
+            author = book_fields["author"]
+            title = book_fields["title"]
+            year = book_fields["year"]
+            publisher = book_fields["publisher"]
+            address = book_fields["address"]
+
+            yield key, author, title, year, publisher, address
+
     def get_bibtex(self):
         bibtex_content = ""
         for key, author, title, journal, year in self.get_articles():

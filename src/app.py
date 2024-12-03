@@ -8,10 +8,12 @@ from db_handle import DatabaseHandle
 
 transaction = Transaction(DatabaseHandle(database=db))
 
+
 @app.route("/", methods=["GET"])
 def index():
     articles = list(transaction.get_articles())
-    return render_template("index.html", content=articles)
+    books = list(transaction.get_books())
+    return render_template("index.html", article_content=articles, book_content=books)
 
 
 @app.route("/submit", methods=["POST"])
@@ -22,16 +24,16 @@ def submit_data():
     if reference == "article":
         try:
             transaction.insert_article(
-                    author=request.form.get("author"),
-                    title=request.form.get("title"),
-                    journal=request.form.get("journal"),
-                    year=request.form.get("year"),
-                    volume=request.form.get("volume"),
-                    month=request.form.get("month"),
-                    number=request.form.get("number"),
-                    pages=request.form.get("pages"),
-                    note=request.form.get("note"),
-                    )
+                author=request.form.get("author"),
+                title=request.form.get("title"),
+                journal=request.form.get("journal"),
+                year=request.form.get("year"),
+                volume=request.form.get("volume"),
+                month=request.form.get("month"),
+                number=request.form.get("number"),
+                pages=request.form.get("pages"),
+                note=request.form.get("note"),
+            )
             return redirect("/")
         except AssertionError as error:
             flash(str(error))
@@ -43,7 +45,7 @@ def submit_data():
                 title=request.form.get("title"),
                 year=request.form.get("year"),
                 publisher=request.form.get("publisher"),
-                address=request.form.get("address")
+                address=request.form.get("address"),
             )
             return redirect("/")
         except AssertionError as error:
@@ -57,8 +59,8 @@ def submit_data():
 def bibtex():
     bibtex_content = transaction.get_bibtex()
 
-    response = Response(bibtex_content, mimetype='text/plain')
-    response.headers['Content-Disposition'] = 'attachment; filename="viitteet.bib"'
+    response = Response(bibtex_content, mimetype="text/plain")
+    response.headers["Content-Disposition"] = 'attachment; filename="viitteet.bib"'
     return response
 
 
@@ -68,11 +70,13 @@ def form():
     form_type = request.args.get("type", "article")
     return render_template("form.html", form_type=form_type)
 
+
 @app.route("/delete-form", methods=["GET"])
 # delete-form sivu
 def delete_form():
     articles = list(transaction.get_articles())
     return render_template("delete-form.html", content=articles)
+
 
 @app.route("/submit-delete", methods=["POST"])
 # poista delete-form.html sivulla valitut artikkelit tietokannan tauluista
@@ -80,6 +84,7 @@ def submit_delete():
     articles = request.form.getlist("valitut")
     flash(articles)
     return redirect("/")
+
 
 if test_env:
 
