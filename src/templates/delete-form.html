@@ -14,7 +14,7 @@
       <th>Vuosi</th>
     </tr>
     <form action="/submit-delete" method="post">
-    {% for key, author, title, journal, year in content %}
+    {% for key, author, title, journal, year in article_content %}
     <tr>
       <td><input type="checkbox" name="valitut" value="{{ key }}">Artikkeli</td>
       <td>{{ key }}</td>
@@ -24,12 +24,32 @@
       <td>{{ year }}</td>
     </tr>
     {% endfor %}
+    <tr>
+      <th>Liite</th>
+      <th>Koodi</th>
+      <th>Kirjoittaja</th>
+      <th>Otsikko</th>
+      <th>Julkaisu</th>
+      <th>Vuosi</th>
+      <th>Osoite</th>
+    </tr>
+    {% for key, author, title, publisher,year,address in book_content %}
+    <tr>
+      <td><input type="checkbox" name="valitut" value="{{ key }}">Kirja</td>
+      <td>{{ key }}</td>
+      <td>{{ author }}</td>
+      <td>{{ title }}</td>
+      <td>{{ publisher }}</td>
+      <td>{{ year }}</td>
+      <td>{{ address }}</td>
+    </tr>
+    {% endfor %}
     <button type="submit">Poista valitut liitteet</button>
     </form>
   </table>
+
 </aside>
 
-<br>
 
 <p><a href="/">Takaisin etusivulle</a></p>
 

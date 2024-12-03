@@ -75,7 +75,10 @@ def form():
 # delete-form sivu
 def delete_form():
     articles = list(transaction.get_articles())
-    return render_template("delete-form.html", content=articles)
+    books = list(transaction.get_books())
+    return render_template(
+        "delete-form.html", article_content=articles, book_content=books
+    )
 
 
 @app.route("/submit-delete", methods=["POST"])
