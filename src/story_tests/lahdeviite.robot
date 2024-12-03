@@ -5,6 +5,25 @@ Suite Teardown   Close Browser
 
 *** Test Cases ***
 
+Reference management program can be opened
+    Go To  ${HOME_URL}
+    Title Should Be  Lähdeviiteohjelma
+    Page Should Contain  Lähdeviiteohjelma
+
+User can open a reference article input form from a dropdown menu
+    Go To  ${HOME_URL}
+    Page Should Contain  Lisää uusi viite
+    Select From List By Value	type	article
+    Click Button  Siirry lomakkeelle
+    Page Should Contain  Lisää artikkeli
+
+User can open a reference book input form from a dropdown menu
+    Go To  ${HOME_URL}
+    Page Should Contain  Lisää uusi viite
+    Select From List By Value	type	book
+    Click Button  Siirry lomakkeelle
+    Page Should Contain  Lisää kirja
+
 User can input an article with mandatory fields title, author, journal, and year
     Go To  ${HOME_URL}
     Select From List By Value	type	article
