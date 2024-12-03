@@ -74,6 +74,13 @@ def delete_form():
     articles = list(transaction.get_articles())
     return render_template("delete-form.html", content=articles)
 
+@app.route("/submit-delete", methods=["POST"])
+# poista delete-form.html sivulla valitut artikkelit tietokannan tauluista
+def submit_delete():
+    articles = request.form.getlist("valitut")
+    flash(articles)
+    return redirect("/")
+
 if test_env:
 
     @app.route("/reset_db")
