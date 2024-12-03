@@ -1,5 +1,6 @@
 from re import search, match
 
+
 class Transaction:
     def __init__(self, db_handle):
         self.db_handle = db_handle
@@ -31,13 +32,15 @@ class Transaction:
         # lopuksi tarkistamme, että koko merkkijono tottelee
         # yksittäisen tai monen kirjoittajan syotettä.
         whole_match = f"^{both_patterns}( AND {both_patterns})*$"
-        assert search(whole_match, author) is not None, \
-                "Syötetty kirjoittaja oli viallinen"
+        assert (
+            search(whole_match, author) is not None
+        ), "Syötetty kirjoittaja oli viallinen"
 
     @staticmethod
     def validate_year(year):
-        assert len(year) == 4 and all(map(str.isdigit, year)), \
-                "Syötetty vuosi oli viallinen"
+        assert len(year) == 4 and all(
+            map(str.isdigit, year)
+        ), "Syötetty vuosi oli viallinen"
 
     @staticmethod
     def generate_key(author, title, year):
@@ -46,17 +49,18 @@ class Transaction:
         return f"{name_start}-{title_start}-{year}"
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
-    def insert_article(self,
-            author,
-            title,
-            journal,
-            year,
-            month="",
-            volume="",
-            number="",
-            pages="",
-            note="",
-            ):
+    def insert_article(
+        self,
+        author,
+        title,
+        journal,
+        year,
+        month="",
+        volume="",
+        number="",
+        pages="",
+        note="",
+    ):
         self.validate_author(author)
         self.validate_year(year)
 
@@ -93,13 +97,7 @@ class Transaction:
             yield key, author, title, journal, year
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
-    def insert_book(self,
-                    author,
-                    title,
-                    year,
-                    publisher,
-                    address
-                    ):
+    def insert_book(self, author, title, year, publisher, address):
         genkey = self.generate_key(author, title, year)
         entry_id = self.db_handle.create_entry("book", genkey)
 
@@ -114,11 +112,13 @@ class Transaction:
     def get_bibtex(self):
         bibtex_content = ""
         for key, author, title, journal, year in self.get_articles():
-            ref_bibtex = f"@article{{{key},\n" \
-                f"\tauthor = {{{author}}},\n" \
-                f"\ttitle = {{{title}}},\n" \
-                f"\tjournal = {{{journal}}},\n" \
-                f"\tyear = {year}\n" \
+            ref_bibtex = (
+                f"@article{{{key},\n"
+                f"\tauthor = {{{author}}},\n"
+                f"\ttitle = {{{title}}},\n"
+                f"\tjournal = {{{journal}}},\n"
+                f"\tyear = {year}\n"
                 "}"
+            )
             bibtex_content += ref_bibtex + "\n\n"
         return bibtex_content

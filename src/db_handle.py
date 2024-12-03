@@ -10,7 +10,9 @@ class DatabaseHandle:
 
     def create_entry(self, entry, key):
         sql = text(
-            "INSERT INTO entries (entry, key)" "VALUES (:entry, :key)" "RETURNING id;"
+            "INSERT INTO entries (entry, key)"
+            + "VALUES (:entry, :key)"
+            + "RETURNING id;"
         )
         eid = self.database.session.execute(sql, {"entry": entry, "key": key}).first()[
             0
@@ -25,7 +27,7 @@ class DatabaseHandle:
         self.database.session.execute(sql, {"id": eid, "field": field, "value": value})
 
     def get_references(self, reference):
-        sql = text("SELECT id, key " "FROM entries " "WHERE entry=:reference")
+        sql = text("SELECT id, key " + "FROM entries " + "WHERE entry=:reference")
         references = self.database.session.execute(sql, {"reference": reference})
 
         for eid, key in references:
