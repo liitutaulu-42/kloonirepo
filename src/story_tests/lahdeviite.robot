@@ -72,6 +72,25 @@ User sees an error message for inputting an incorrectly formatted year
     Click Button  Lähetä
     Page Should Contain  Syötetty vuosi oli viallinen
 
+User sees that an article with missing mandatory fields can not be submitted
+    Go To  ${HOME_URL}
+    Select From List By Value	type	article
+    Click Button  Siirry lomakkeelle
+    Click Button  Lähetä
+    Page Should Not Contain  Artikkeli lisätty onnistuneesti
+    Input Text  title  Otsikko 1
+    Click Button  Lähetä
+    Page Should Not Contain  Artikkeli lisätty onnistuneesti
+    Input Text  author  Kirjoittaja A
+    Click Button  Lähetä
+    Page Should Not Contain  Artikkeli lisätty onnistuneesti
+    Input Text  year  2025
+    Click Button  Lähetä
+    Page Should Not Contain  Artikkeli lisätty onnistuneesti
+    Input Text  journal  Julkaisu 1
+    Click Button  Lähetä
+    Page Should Contain  Artikkeli lisätty onnistuneesti
+
 User can input an book with mandatory fields title, author, year, publisher, and address
     Go To  ${HOME_URL}
     Select From List By Value	type	book
@@ -87,3 +106,25 @@ User can input an book with mandatory fields title, author, year, publisher, and
 User can see a previously input book listed on home page
     Go To  ${HOME_URL}
     Page Should Contain  Kirjoittaja-Otsikko-2000
+
+User sees that a book with missing mandatory fields can not be submitted
+    Go To  ${HOME_URL}
+    Select From List By Value	type	book
+    Click Button  Siirry lomakkeelle
+    Click Button  Lähetä
+    Page Should Not Contain  Kirja lisätty onnistuneesti
+    Input Text  title  Otsikko 1
+    Click Button  Lähetä
+    Page Should Not Contain  Kirja lisätty onnistuneesti
+    Input Text  author  Kirjoittaja A
+    Click Button  Lähetä
+    Page Should Not Contain  Kirja lisätty onnistuneesti
+    Input Text  year  2001
+    Click Button  Lähetä
+    Page Should Not Contain  Kirja lisätty onnistuneesti
+    Input Text  publisher  Julkaisu 1
+    Click Button  Lähetä
+    Page Should Not Contain  Kirja lisätty onnistuneesti
+    Input Text  address  Osoite 1
+    Click Button  Lähetä
+    Page Should Contain  Kirja lisätty onnistuneesti
