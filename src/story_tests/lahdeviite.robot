@@ -128,3 +128,19 @@ User sees that a book with missing mandatory fields can not be submitted
     Input Text  address  Osoite 1
     Click Button  Lähetä
     Page Should Contain  Kirja lisätty onnistuneesti
+
+User can navigate to a reference deletion menu
+    Go To  ${HOME_URL}
+    Click Button  Poista liitteitä
+    Page Should Contain  Poista liitteitä
+
+User can navigate back to the main page from the reference deletion menu
+    Go To  ${HOME_URL}
+    Click Button  Poista liitteitä
+    Click Link  link=Takaisin etusivulle
+    Page Should Contain  Lähdeviiteohjelma
+
+User sees a checkbox to delete reference entries on the deletion page
+    Go To  ${HOME_URL}
+    Click Button  Poista liitteitä
+    Page Should Contain Checkbox  name=valitut
