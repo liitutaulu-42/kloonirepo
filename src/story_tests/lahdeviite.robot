@@ -71,3 +71,19 @@ User sees an error message for inputting an incorrectly formatted year
     Input Text  journal  Julkaisu 1
     Click Button  Lähetä
     Page Should Contain  Syötetty vuosi oli viallinen
+
+User can input an book with mandatory fields title, author, year, publisher, and address
+    Go To  ${HOME_URL}
+    Select From List By Value	type	book
+    Click Button  Siirry lomakkeelle
+    Input Text  title  Otsikko 1
+    Input Text  author  Kirjoittaja A
+    Input Text  year  2000
+    Input Text  publisher  Julkaisija 1
+    Input Text  address  Osoite 1
+    Click Button  Lähetä
+    Page Should Contain  Kirjoittaja-Otsikko-2000
+
+User can see a previously input book listed on home page
+    Go To  ${HOME_URL}
+    Page Should Contain  Kirjoittaja-Otsikko-2000
