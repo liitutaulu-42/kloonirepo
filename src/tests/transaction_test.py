@@ -35,6 +35,39 @@ class TestTransaction(unittest.TestCase):
         )
         self.database_handle.commit.assert_called_once()
 
+    def test_insert_article_values_are_same_additional(self):
+        self.database_handle.create_entry.return_value = 1
+        self.transaction.insert_article(
+            author="Isaac Newton",
+            title="Title of the Article",
+            journal="A",
+            year="2024",
+            month="01",
+            volume="01",
+            number="12",
+            pages="12-14",
+            note="no comments",
+        )
+
+        self.database_handle.create_entry.assert_called_once_with(
+            "article", "Isaac-Title-2024"
+        )
+        self.database_handle.add_field.assert_has_calls(
+            [
+                call(1, "author", "Isaac Newton"),
+                call(1, "title", "Title of the Article"),
+                call(1, "journal", "A"),
+                call(1, "year", "2024"),
+                call(1, "month", "01"),
+                call(1, "volume", "01"),
+                call(1, "number", "12"),
+                call(1, "pages", "12-14"),
+                call(1, "note", "no comments"),
+            ],
+            any_order=True,
+        )
+        self.database_handle.commit.assert_called_once()
+
     def test_fail_author_syntax(self):
         with self.assertRaises(AssertionError):
             self.transaction.insert_article(
