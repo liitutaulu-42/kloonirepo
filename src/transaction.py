@@ -18,7 +18,7 @@ class Transaction:
 
         # nimi esitetään aakkosisena merkkijonona, koska en löytänyt toista
         # ohjeistusta
-        name = "[A-Za-z]+"
+        name = r"\S+"
         # tosiaan montaa etunimeä tuetaan ja se vaikutti olevan ainoastaan
         # etunimet väleillä erotettuina
         first_names = f"{name}( {name})*"
@@ -44,8 +44,8 @@ class Transaction:
 
     @staticmethod
     def generate_key(author, title, year):
-        name_start = match("^[A-Za-z]+", author).group()
-        title_start = match("^[A-Za-z]+", title).group()
+        name_start = match(r"\S+", author).group()
+        title_start = match(r"\S+", title).group()
         return f"{name_start}-{title_start}-{year}"
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
@@ -100,8 +100,16 @@ class Transaction:
             pages = article_fields.get("pages", "-")
             note = article_fields.get("note", "-")
             yield (
-                key, author, title, journal, year,
-                month, volume, number, pages, note
+                key,
+                author,
+                title,
+                journal,
+                year,
+                month,
+                volume,
+                number,
+                pages,
+                note,
             )
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
