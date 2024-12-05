@@ -39,11 +39,13 @@ class DatabaseHandle:
         reference = dict(fields.fetchall())
         return reference
 
-    # def delete_entry(self, key):
-    #     result = self.database.session.execute(text(f"SELECT id FROM entries WHERE key=:key"), {'key': key})
-    #     eid = result.scalar()
-    #     sql = text("DELETE FROM fields WHERE owner_id=:id")
-    #     self.database.session.execute(sql, {"id": eid})
-    #     self.database.session.commit()
-    #     sql = text("DELETE FROM entries WHERE ")
-    #     self.database.session.commit()
+    def delete_entry(self, key):
+        result = text("SELECT id FROM entries WHERE key=:key")
+        execution = self.database.session.execute(result, {"key": key})
+        eid = execution.scalar()
+        sql = text("DELETE FROM fields WHERE owner_id=:id")
+        self.database.session.execute(sql, {"id": eid})
+        self.database.session.commit()
+        sql = text("DELETE FROM entries WHERE id=:id")
+        self.database.session.execute(sql, {"id": eid})
+        self.database.session.commit()
