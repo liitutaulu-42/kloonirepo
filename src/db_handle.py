@@ -40,7 +40,8 @@ class DatabaseHandle:
         return reference
 
     # def delete_entry(self, key):
-    #     result = self.database.session.execute(text(f"SELECT id FROM entries WHERE key=:key"), {'key': key})
+    #     sql = text(f"SELECT id FROM entries WHERE key=:key")
+    #     result = self.database.session.execute(sql, {'key': key})
     #     eid = result.scalar()
     #     sql = text("DELETE FROM fields WHERE owner_id=:id")
     #     self.database.session.execute(sql, {"id": eid})

@@ -86,7 +86,7 @@ def delete_form():
 @app.route("/submit-delete", methods=["POST"])
 # poista delete-form.html sivulla valitut artikkelit tietokannan tauluista
 def submit_delete():
-    articles = request.form.getlist("valitut")
+    # articles = request.form.getlist("valitut")
     # for key in articles:
     #     transaction.db_handle.delete_entry(key)
     # flash("Valitut artikkelit poistettu")
