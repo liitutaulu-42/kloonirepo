@@ -2,6 +2,7 @@
 
 [![GHA workflow badge](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/ci.yaml/badge.svg)](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/ci.yaml)
 [![Pylint workflow badge](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/pylint.yml/badge.svg)](https://github.com/liitutaulu-42/miniprojekti-liitutaulu-42/actions/workflows/pylint.yml)
+[![codecov](https://codecov.io/gh/liitutaulu-42/miniprojekti-liitutaulu-42/graph/badge.svg?token=EFRW71HK8R)](https://codecov.io/gh/liitutaulu-42/miniprojekti-liitutaulu-42)
 
 Asiakas määritteet [täältä](https://ohjelmistotuotanto-hy.github.io/speksi/)
 
