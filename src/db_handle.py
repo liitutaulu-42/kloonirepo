@@ -38,3 +38,12 @@ class DatabaseHandle:
         fields = self.database.session.execute(sql, {"id": eid})
         reference = dict(fields.fetchall())
         return reference
+
+    # def delete_entry(self, key):
+    #     result = self.database.session.execute(text(f"SELECT id FROM entries WHERE key=:key"), {'key': key})
+    #     eid = result.scalar()
+    #     sql = text("DELETE FROM fields WHERE owner_id=:id")
+    #     self.database.session.execute(sql, {"id": eid})
+    #     self.database.session.commit()
+    #     sql = text("DELETE FROM entries WHERE ")
+    #     self.database.session.commit()
