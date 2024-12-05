@@ -91,6 +91,27 @@ User sees that an article with missing mandatory fields can not be submitted
     Click Button  Lähetä
     Page Should Contain  Artikkeli lisätty onnistuneesti
 
+User can input an article with optional fields month, volume, number, pages, and note
+    Go To  ${HOME_URL}
+    Select From List By Value	type	article
+    Click Button  Siirry lomakkeelle
+    Input Text  title  Otsikko 1
+    Input Text  author  Kirjoittaja A
+    Input Text  year  2026
+    Input Text  journal  Julkaisu 1
+    Input Text  month  3
+    Input Text  volume  10
+    Input Text  number  20
+    Input Text  pages  1-2
+    Input Text  note  Lisätieto 1
+    Click Button  Lähetä
+    Page Should Contain  Kirjoittaja-Otsikko-2026
+    Page Should Contain  3
+    Page Should Contain  10
+    Page Should Contain  20
+    Page Should Contain  1-2
+    Page Should Contain  Lisätieto 1
+
 User can input an book with mandatory fields title, author, year, publisher, and address
     Go To  ${HOME_URL}
     Select From List By Value	type	book
