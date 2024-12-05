@@ -94,7 +94,15 @@ class Transaction:
             journal = article_fields["journal"]
             title = article_fields["title"]
             year = article_fields["year"]
-            yield key, author, title, journal, year
+            month = article_fields.get("month", "-")
+            volume = article_fields.get("volume", "-")
+            number = article_fields.get("number", "-")
+            pages = article_fields.get("pages", "-")
+            note = article_fields.get("note", "-")
+            yield (
+                key, author, title, journal, year,
+                month, volume, number, pages, note
+            )
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     def insert_book(self, author, title, year, publisher, address):
@@ -125,7 +133,7 @@ class Transaction:
 
     def get_bibtex(self):
         bibtex_content = ""
-        for key, author, title, journal, year in self.get_articles():
+        for key, author, title, journal, year, _, _, _, _, _ in self.get_articles():
             ref_bibtex = (
                 f"@article{{{key},\n"
                 f"\tauthor = {{{author}}},\n"

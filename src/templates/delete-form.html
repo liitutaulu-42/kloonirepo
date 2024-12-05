@@ -12,9 +12,14 @@
       <th>Otsikko</th>
       <th>Julkaisu</th>
       <th>Vuosi</th>
+      <th>Kuukausi</th>
+      <th>Vuosikerta</th>
+      <th>Julkaisuluku</th>
+      <th>Sivut</th>
+      <th>Muuta tietoa</th>
     </tr>
     <form action="/submit-delete" method="post">
-    {% for key, author, title, journal, year in article_content %}
+    {% for key, author, title, journal, year, month, volume, number, pages, note in article_content %}
     <tr>
       <td><input type="checkbox" name="valitut" value="{{ key }}">Artikkeli</td>
       <td>{{ key }}</td>
@@ -22,6 +27,11 @@
       <td>{{ title }}</td>
       <td>{{ journal }}</td>
       <td>{{ year }}</td>
+      <td>{{ month }}</td>
+      <td>{{ volume }}</td>
+      <td>{{ number }}</td>
+      <td>{{ pages }}</td>
+      <td>{{ note }}</td>
     </tr>
     {% endfor %}
     <tr>
