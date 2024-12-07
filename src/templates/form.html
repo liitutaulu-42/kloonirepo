@@ -11,16 +11,58 @@
   {% endif %}
 {% endwith %}
 
-<h2>Valitse lisättävän viitteen tyyppi</h2>
-
-<div>
-  <form action="/form" method="get">
-    <button type="submit" name="type" value="article">Artikkeli</button>
-    <button type="submit" name="type" value="book">Kirja</button>
-  </form>
-</div>
-
-<hr>
+<aside>
+  <table>
+    <tr>
+      <th>Liite</th>
+      <th>Koodi</th>
+      <th>Kirjoittaja</th>
+      <th>Otsikko</th>
+      <th>Julkaisu</th>
+      <th>Vuosi</th>
+      <th>Kuukausi</th>
+      <th>Vuosikerta</th>
+      <th>Julkaisuluku</th>
+      <th>Sivut</th>
+      <th>Muuta tietoa</th>
+    </tr>
+    {% for key, author, title, journal, year, month, volume, number, pages, note in article_content %}
+    <tr>
+      <td>Artikkeli</td>
+      <td>{{ key }}</td>
+      <td>{{ author }}</td>
+      <td>{{ title }}</td>
+      <td>{{ journal }}</td>
+      <td>{{ year }}</td>
+      <td>{{ month }}</td>
+      <td>{{ volume }}</td>
+      <td>{{ number }}</td>
+      <td>{{ pages }}</td>
+      <td>{{ note }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th>Liite</th>
+      <th>Koodi</th>
+      <th>Kirjoittaja</th>
+      <th>Otsikko</th>
+      <th>Julkaisu</th>
+      <th>Vuosi</th>
+      <th>Osoite</th>
+    </tr>
+    {% for key, author, title, publisher,year,address in book_content %}
+    <tr>
+      <td>Kirja</td>
+      <td>{{ key }}</td>
+      <td>{{ author }}</td>
+      <td>{{ title }}</td>
+      <td>{{ publisher }}</td>
+      <td>{{ year }}</td>
+      <td>{{ address }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</aside>
 
 <div id="form-container">
   {% if form_type == "article" %}
@@ -30,12 +72,4 @@
   {% endif %}
 </div>
 
-<br>
-
-<p><a href="/">Takaisin etusivulle</a></p>
-
 {% endblock %}
-
-
-
-

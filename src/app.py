@@ -13,12 +13,14 @@ transaction = Transaction(DatabaseHandle(database=db))
 def index():
     articles = list(transaction.get_articles())
     books = list(transaction.get_books())
-    return render_template("index.html", article_content=articles, book_content=books)
+    return render_template(
+        "index.html", article_content=articles, book_content=books, is_index=True
+    )
 
 
 @app.route("/submit", methods=["POST"])
 # lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
-# ja työntää ne tietokantaan ja lopuksi palauttaa sivuston aloitussivulle
+# ja työntää ne tietokantaan ja lopuksi palauttaa takaisin samalle lomakkeelle
 def submit_data():
     reference = request.form.get("reference")
     if reference == "article":
@@ -35,7 +37,7 @@ def submit_data():
                 note=request.form.get("note"),
             )
             flash("Artikkeli lisätty onnistuneesti")
-            return redirect("/")
+            return redirect("/form?type=article")
         except AssertionError as error:
             flash(str(error))
             return redirect("/form?type=article")
@@ -49,11 +51,11 @@ def submit_data():
                 address=request.form.get("address"),
             )
             flash("Kirja lisätty onnistuneesti")
-            return redirect("/")
+            return redirect("/form?type=book")
         except AssertionError as error:
             flash(str(error))
             return redirect("/form?type=book")
-    return redirect("/")
+    return redirect("/form")
 
 
 @app.route("/bibtex", methods=["GET"])
@@ -70,7 +72,15 @@ def bibtex():
 # sivu lomakkeille
 def form():
     form_type = request.args.get("type", "article")
-    return render_template("form.html", form_type=form_type)
+    articles = list(transaction.get_articles())
+    books = list(transaction.get_books())
+    return render_template(
+        "form.html",
+        form_type=form_type,
+        article_content=articles,
+        book_content=books,
+        is_index=False
+    )
 
 
 @app.route("/delete-form", methods=["GET"])
@@ -79,7 +89,7 @@ def delete_form():
     articles = list(transaction.get_articles())
     books = list(transaction.get_books())
     return render_template(
-        "delete-form.html", article_content=articles, book_content=books
+        "delete-form.html", article_content=articles, book_content=books, is_index=False
     )
 
 
@@ -99,7 +109,12 @@ def edit_form():
     entry_type = request.args.get("type")
     eid = transaction.db_handle.get_key_of(key)
     entry_data = transaction.db_handle.get_fields_of(eid)
-    return render_template("edit_form.html", edit_data=entry_data, content_type=entry_type)
+    return render_template(
+        "edit_form.html",
+        edit_data=entry_data,
+        content_type=entry_type,
+        is_index=False
+    )
 
 
 if test_env:
