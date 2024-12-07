@@ -1,47 +1,45 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <style>
-      aside {
-        width: 70%;
-        padding-left: 15px;
-        margin-left: 15px;
-        margin-right: 15px;
-        padding-right: 15px;
-        float: right;
-      }
-      table {
-        width: 80%;
-        max-height: 300px;
-        overflow: scroll;
-        border-collapse: collapse;
-        border: 10px solid #ccc;
-        padding: 10px;
-      }
-      td,
-      th {
-        text-align: left;
-        padding: 5px;
-        box-sizing: border-box;
-        min-width: 20px;
-        max-width: 200px;
-      }
-      tr {
-        border: 1px solid #ddd;
-      }
-      tr:nth-child(even) {
-        background-color: #eee;
-      }
-    </style>
-
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    {% block body %}{% endblock %}
-  </body>
+    <div class="navbar">
+      <div class="left-links">
+          <div class="title">Lähdeviiteohjelma</div>
+          <div class="separator"></div>
+          <form action="/form?type=article" method="get">
+            <button type="submit" name="type" value="article">Lisää artikkeli</button>
+          </form>
+          <form action="/form?type=book" method="get">
+            <button type="submit" name="type" value="book">Lisää kirja</button>
+          </form>
+          <form action="/" method="get">
+            <button type="submit">Muokkaa viite</button>
+          </form>
+          <form action="/delete-form" method="get">
+            <button type="submit">Poista viite</button>
+          </form>
+      </div>
+      <div class="right-links">
+          <form action="/bibtex" method="get">
+            <button type="submit">Lataa BibTeX</button>
+          </form>
+          {% if not is_index%}
+            <form action="/" method="get">
+              <button type="submit">Etusivulle</button>
+            </form>
+          {% endif %}
+      </div>
+  </div>
+  <main>
+  {% block body %}{% endblock %}
+  </main>
+</body>
 </html>
