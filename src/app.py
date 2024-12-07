@@ -93,6 +93,15 @@ def submit_delete():
     return redirect("/")
 
 
+@app.route("/edit_form", methods=["GET"])
+def edit_form():
+    key = request.args.get("key")
+    entry_type = request.args.get("type")
+    eid = transaction.db_handle.get_key_of(key)
+    entry_data = transaction.db_handle.get_fields_of(eid)
+    return render_template("edit_form.html", edit_data=entry_data, content_type=entry_type)
+
+
 if test_env:
 
     @app.route("/reset_db")

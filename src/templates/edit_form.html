@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h3>Muokkaa tietoja</h3>
+
+{% if content_type == 'article' %}
+<p>{{ edit_data.key }}</p>
+<p>Kirjoittaja: {{ edit_data.author }}</p>
+<p>Otsikko: {{ edit_data.title }}</p>
+<p>Julkaisu: {{ edit_data.journal }}</p>
+<p>Vuosi: {{ edit_data.year }}</p>
+<p>Kuukausi: {{ edit_data.month }}</p>
+<p>Vuosikerta: {{ edit_data.volume }}</p>
+<p>Julkaisuluku: {{ edit_data.number }}</p>
+<p>Sivut: {{ edit_data.pages }}</p>
+<p>Muuta tietoa: {{ edit_data.note }}</p>
+{% endif %}
+
+{% if content_type == 'book' %}
+<p>{{ edit_data.key }}</p>
+<p>Kirjoittaja: {{ edit_data.author }}</p>
+<p>Otsikko: {{ edit_data.title }}</p>
+<p>Julkaisu: {{ edit_data.publisher }}</p>
+<p>Vuosi: {{ edit_data.year }}</p>
+<p>Osoite: {{ edit_data.address }}</p>
+{% endif %}
+
+<br>
+
+<p><a href="/">Takaisin etusivulle</a></p>
+
+{% endblock %}
