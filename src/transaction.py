@@ -18,7 +18,7 @@ class Transaction:
 
         # nimi esitetään aakkosisena merkkijonona, koska en löytänyt toista
         # ohjeistusta
-        name = r"\S+"
+        name = r"\w+"
         # tosiaan montaa etunimeä tuetaan ja se vaikutti olevan ainoastaan
         # etunimet väleillä erotettuina
         first_names = f"{name}( {name})*"
@@ -44,8 +44,8 @@ class Transaction:
 
     @staticmethod
     def generate_key(author, title, year):
-        name_start = match(r"\S+", author).group()
-        title_start = match(r"\S+", title).group()
+        name_start = match(r"\w+", author).group()
+        title_start = match(r"\w+", title).group()
         return f"{name_start}-{title_start}-{year}"
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
