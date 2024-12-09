@@ -30,7 +30,7 @@
     </tr>
     {% for key, author, title, journal, year, month, volume, number, pages, note in article_content %}
     <tr>
-      <td><a href="/edit_form?key={{ key }}&type=article">Artikkeli</a></td>
+      <td>Artikkeli</td>
       <td>{{ key }}</td>
       <td>{{ author }}</td>
       <td>{{ title }}</td>
@@ -54,7 +54,7 @@
     </tr>
     {% for key, author, title, publisher,year,address in book_content %}
     <tr>
-      <td><a href="/edit_form?key={{ key }}&type=book">Kirja</a></td>
+      <td>Kirja</td>
       <td>{{ key }}</td>
       <td>{{ author }}</td>
       <td>{{ title }}</td>

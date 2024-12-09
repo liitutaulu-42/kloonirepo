@@ -105,6 +105,8 @@ def submit_delete():
 
 @app.route("/edit_form", methods=["GET"])
 def edit_form():
+    articles = list(transaction.get_articles())
+    books = list(transaction.get_books())
     key = request.args.get("key")
     entry_type = request.args.get("type")
     eid = transaction.db_handle.get_key_of(key)
@@ -113,6 +115,8 @@ def edit_form():
         "edit_form.html",
         edit_data=entry_data,
         content_type=entry_type,
+        article_content=articles,
+        book_content=books,
         is_index=False
     )
 
