@@ -1,62 +1,20 @@
+{% from 'reference-table.html' import article_table, book_table %}
+
 {% extends "layout.html" %}
 
 {% block body %}
 <h3>Poista liitteitä</h3>
 
 <aside>
-  <table>
-    <tr>
-      <th>Viite</th>
-      <th>Koodi</th>
-      <th>Kirjoittaja</th>
-      <th>Otsikko</th>
-      <th>Julkaisu</th>
-      <th>Vuosi</th>
-      <th>Kuukausi</th>
-      <th>Vuosikerta</th>
-      <th>Julkaisuluku</th>
-      <th>Sivut</th>
-      <th>Muuta tietoa</th>
-    </tr>
-    <form action="/submit-delete" method="post">
-    {% for key, author, title, journal, year, month, volume, number, pages, note in article_content %}
-    <tr>
-      <td><input type="checkbox" name="valitut" value="{{ key }}">Artikkeli</td>
-      <td>{{ key }}</td>
-      <td>{{ author }}</td>
-      <td>{{ title }}</td>
-      <td>{{ journal }}</td>
-      <td>{{ year }}</td>
-      <td>{{ month }}</td>
-      <td>{{ volume }}</td>
-      <td>{{ number }}</td>
-      <td>{{ pages }}</td>
-      <td>{{ note }}</td>
-    </tr>
-    {% endfor %}
-    <tr>
-      <th>Viite</th>
-      <th>Koodi</th>
-      <th>Kirjoittaja</th>
-      <th>Otsikko</th>
-      <th>Julkaisu</th>
-      <th>Vuosi</th>
-      <th>Osoite</th>
-    </tr>
-    {% for key, author, title, publisher,year,address in book_content %}
-    <tr>
-      <td><input type="checkbox" name="valitut" value="{{ key }}">Kirja</td>
-      <td>{{ key }}</td>
-      <td>{{ author }}</td>
-      <td>{{ title }}</td>
-      <td>{{ publisher }}</td>
-      <td>{{ year }}</td>
-      <td>{{ address }}</td>
-    </tr>
-    {% endfor %}
+  <form action="/submit-delete" method="post">
     <button type="submit">Poista valitut liitteet</button>
-    </form>
-  </table>
+    {% call(key) article_table(article_content) %}
+    <input type="checkbox" name="valitut", value="{{ key }}">Artikkeli
+    {% endcall %}
+    {% call(key) book_table(book_content) %}
+    <input type="checkbox" name="valitut", value="{{ key }}">Kirja
+    {% endcall %}
+  </form>
 
 </aside>
 

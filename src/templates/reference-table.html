@@ -1,0 +1,57 @@
+{% macro article_table(articles) %}
+<table>
+  <tr>
+    <th>Viite</th>
+    <th>Koodi</th>
+    <th>Kirjoittaja</th>
+    <th>Otsikko</th>
+    <th>Julkaisu</th>
+    <th>Vuosi</th>
+    <th>Kuukausi</th>
+    <th>Vuosikerta</th>
+    <th>Julkaisuluku</th>
+    <th>Sivut</th>
+    <th>Muuta tietoa</th>
+  </tr>
+  {% for key, author, title, journal, year, month, volume, number, pages, note in articles %}
+  <tr>
+    <td>{{ caller(key) }}</td>
+    <td>{{ key }}</td>
+    <td>{{ author }}</td>
+    <td>{{ title }}</td>
+    <td>{{ journal }}</td>
+    <td>{{ year }}</td>
+    <td>{{ month }}</td>
+    <td>{{ volume }}</td>
+    <td>{{ number }}</td>
+    <td>{{ pages }}</td>
+    <td>{{ note }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endmacro %}
+
+{% macro book_table(books) %}
+<table>
+  <tr>
+    <th>Viite</th>
+    <th>Koodi</th>
+    <th>Kirjoittaja</th>
+    <th>Otsikko</th>
+    <th>Julkaisu</th>
+    <th>Vuosi</th>
+    <th>Osoite</th>
+  </tr>
+  {% for key, author, title, publisher, year, address in books %}
+  <tr>
+    <td>{{ caller(key) }}</td>
+    <td>{{ key }}</td>
+    <td>{{ author }}</td>
+    <td>{{ title }}</td>
+    <td>{{ publisher }}</td>
+    <td>{{ year }}</td>
+    <td>{{ address }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endmacro %}

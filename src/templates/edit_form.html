@@ -1,3 +1,4 @@
+{% from 'reference-table.html' import article_table, book_table %}
 {% extends "layout.html" %}
 
 {% block body %}
@@ -27,57 +28,15 @@
 
 <br>
 
+{# <a href="/edit_form?key={{ key}}&type=article">Artikkeli</a> #}
+
 <aside>
-    <table>
-      <tr>
-        <th>Viite</th>
-        <th>Koodi</th>
-        <th>Kirjoittaja</th>
-        <th>Otsikko</th>
-        <th>Julkaisu</th>
-        <th>Vuosi</th>
-        <th>Kuukausi</th>
-        <th>Vuosikerta</th>
-        <th>Julkaisuluku</th>
-        <th>Sivut</th>
-        <th>Muuta tietoa</th>
-      </tr>
-      {% for key, author, title, journal, year, month, volume, number, pages, note in article_content %}
-      <tr>
-        <td><a href="/edit_form?key={{ key }}&type=article">Artikkeli</a></td>
-        <td>{{ key }}</td>
-        <td>{{ author }}</td>
-        <td>{{ title }}</td>
-        <td>{{ journal }}</td>
-        <td>{{ year }}</td>
-        <td>{{ month }}</td>
-        <td>{{ volume }}</td>
-        <td>{{ number }}</td>
-        <td>{{ pages }}</td>
-        <td>{{ note }}</td>
-      </tr>
-      {% endfor %}
-      <tr>
-        <th>Viite</th>
-        <th>Koodi</th>
-        <th>Kirjoittaja</th>
-        <th>Otsikko</th>
-        <th>Julkaisu</th>
-        <th>Vuosi</th>
-        <th>Osoite</th>
-      </tr>
-      {% for key, author, title, publisher,year,address in book_content %}
-      <tr>
-        <td><a href="/edit_form?key={{ key }}&type=book">Kirja</a></td>
-        <td>{{ key }}</td>
-        <td>{{ author }}</td>
-        <td>{{ title }}</td>
-        <td>{{ publisher }}</td>
-        <td>{{ year }}</td>
-        <td>{{ address }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+    {% call(key) article_table(article_content) %}
+    <a href="/edit_form?key={{ key }}&type=article">Artikkeli</a>
+    {% endcall %}
+    {% call(key) book_table(book_content) %}
+    <a href="/edit_form?key={{ key }}&type=book">Kirja</a>
+    {% endcall %}
 </aside>
 
 {% endblock %}
