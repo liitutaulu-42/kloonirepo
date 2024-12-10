@@ -18,11 +18,10 @@ def index():
     )
 
 
-@app.route("/submit", methods=["POST"])
+@app.route("/submit/<reference>", methods=["POST"])
 # lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
 # ja työntää ne tietokantaan ja lopuksi palauttaa takaisin samalle lomakkeelle
-def submit_data():
-    reference = request.form.get("reference")
+def submit(reference):
     if reference == "article":
         try:
             transaction.insert_article(
@@ -37,10 +36,10 @@ def submit_data():
                 note=request.form.get("note"),
             )
             flash("Artikkeli lisätty onnistuneesti")
-            return redirect("/form?type=article")
+            return redirect("/form/article")
         except AssertionError as error:
             flash(str(error))
-            return redirect("/form?type=article")
+            return redirect("/form/article")
     elif reference == "book":
         try:
             transaction.insert_book(
@@ -51,32 +50,21 @@ def submit_data():
                 address=request.form.get("address"),
             )
             flash("Kirja lisätty onnistuneesti")
-            return redirect("/form?type=book")
+            return redirect("/form/book")
         except AssertionError as error:
             flash(str(error))
-            return redirect("/form?type=book")
+            return redirect("/form/book")
     return redirect("/form")
 
 
-@app.route("/bibtex", methods=["GET"])
-# lataa bibtex tiedoston
-def bibtex():
-    bibtex_content = transaction.get_bibtex()
-
-    response = Response(bibtex_content, mimetype="text/plain")
-    response.headers["Content-Disposition"] = 'attachment; filename="viitteet.bib"'
-    return response
-
-
-@app.route("/form", methods=["GET"])
+@app.route("/form/<reference>", methods=["GET"])
 # sivu lomakkeille
-def form():
-    form_type = request.args.get("type", "article")
+def form(reference):
     articles = list(transaction.get_articles())
     books = list(transaction.get_books())
     return render_template(
         "form.html",
-        form_type=form_type,
+        form_type=reference,
         article_content=articles,
         book_content=books,
         is_index=False
@@ -103,22 +91,31 @@ def submit_delete():
     return redirect("/")
 
 
-@app.route("/edit_form", methods=["GET"])
-def edit_form():
+@app.route("/edit_form")
+@app.route("/edit_form/<reference>/<key>")
+def edit_form(reference=None, key=None):
     articles = list(transaction.get_articles())
     books = list(transaction.get_books())
-    key = request.args.get("key")
-    entry_type = request.args.get("type")
     eid = transaction.db_handle.get_key_of(key)
     entry_data = transaction.db_handle.get_fields_of(eid)
     return render_template(
         "edit_form.html",
         edit_data=entry_data,
-        content_type=entry_type,
+        content_type=reference,
         article_content=articles,
         book_content=books,
         is_index=False
     )
+
+
+@app.route("/bibtex", methods=["GET"])
+# lataa bibtex tiedoston
+def bibtex():
+    bibtex_content = transaction.get_bibtex()
+
+    response = Response(bibtex_content, mimetype="text/plain")
+    response.headers["Content-Disposition"] = 'attachment; filename="viitteet.bib"'
+    return response
 
 
 if test_env:

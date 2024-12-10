@@ -28,14 +28,12 @@
 
 <br>
 
-{# <a href="/edit_form?key={{ key}}&type=article">Artikkeli</a> #}
-
 <aside>
     {% call(key) article_table(article_content) %}
-    <a href="/edit_form?key={{ key }}&type=article">Artikkeli</a>
+    <a href="/edit_form/article/{{ key }}">Artikkeli</a>
     {% endcall %}
     {% call(key) book_table(book_content) %}
-    <a href="/edit_form?key={{ key }}&type=book">Kirja</a>
+    <a href="/edit_form/book/{{ key }}">Kirja</a>
     {% endcall %}
 </aside>
 
