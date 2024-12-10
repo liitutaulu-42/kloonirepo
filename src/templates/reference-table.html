@@ -13,19 +13,19 @@
     <th>Sivut</th>
     <th>Muuta tietoa</th>
   </tr>
-  {% for key, author, title, journal, year, month, volume, number, pages, note in articles %}
+  {% for article in articles %}
   <tr>
-    <td>{{ caller(key) }}</td>
-    <td>{{ key }}</td>
-    <td>{{ author }}</td>
-    <td>{{ title }}</td>
-    <td>{{ journal }}</td>
-    <td>{{ year }}</td>
-    <td>{{ month }}</td>
-    <td>{{ volume }}</td>
-    <td>{{ number }}</td>
-    <td>{{ pages }}</td>
-    <td>{{ note }}</td>
+    <td>{{ caller(article.key) }}</td>
+    <td>{{ article.key }}</td>
+    <td>{{ article.author }}</td>
+    <td>{{ article.title }}</td>
+    <td>{{ article.journal }}</td>
+    <td>{{ article.year }}</td>
+    <td>{{ article.month or "-" }}</td>
+    <td>{{ article.volume or "-" }}</td>
+    <td>{{ article.number or "-" }}</td>
+    <td>{{ article.pages or "-" }}</td>
+    <td>{{ article.note or "-" }}</td>
   </tr>
   {% endfor %}
 </table>
@@ -42,15 +42,15 @@
     <th>Vuosi</th>
     <th>Osoite</th>
   </tr>
-  {% for key, author, title, publisher, year, address in books %}
+  {% for book in books %}
   <tr>
-    <td>{{ caller(key) }}</td>
-    <td>{{ key }}</td>
-    <td>{{ author }}</td>
-    <td>{{ title }}</td>
-    <td>{{ publisher }}</td>
-    <td>{{ year }}</td>
-    <td>{{ address }}</td>
+    <td>{{ caller(book.key) }}</td>
+    <td>{{ book.key }}</td>
+    <td>{{ book.author }}</td>
+    <td>{{ book.title }}</td>
+    <td>{{ book.publisher }}</td>
+    <td>{{ book.year }}</td>
+    <td>{{ book.address }}</td>
   </tr>
   {% endfor %}
 </table>

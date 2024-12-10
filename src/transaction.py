@@ -1,4 +1,5 @@
 from re import search, match
+from references import Article, Book
 
 
 class Transaction:
@@ -90,27 +91,19 @@ class Transaction:
     def get_articles(self):
         for eid, key in self.db_handle.get_references("article"):
             article_fields = self.db_handle.get_fields_of(eid)
-            author = article_fields["author"]
-            journal = article_fields["journal"]
-            title = article_fields["title"]
-            year = article_fields["year"]
-            month = article_fields.get("month", "")
-            volume = article_fields.get("volume", "")
-            number = article_fields.get("number", "")
-            pages = article_fields.get("pages", "")
-            note = article_fields.get("note", "")
-            yield (
-                key,
-                author,
-                title,
-                journal,
-                year,
-                month,
-                volume,
-                number,
-                pages,
-                note,
+            article = Article(
+                key=key,
+                author=article_fields["author"],
+                journal=article_fields["journal"],
+                title=article_fields["title"],
+                year=article_fields["year"],
+                month=article_fields.get("month"),
+                volume=article_fields.get("volume"),
+                number=article_fields.get("number"),
+                pages=article_fields.get("pages"),
+                note=article_fields.get("note"),
             )
+            yield article
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     def insert_book(self, author, title, year, publisher, address):
@@ -131,13 +124,16 @@ class Transaction:
     def get_books(self):
         for eid, key in self.db_handle.get_references("book"):
             book_fields = self.db_handle.get_fields_of(eid)
-            author = book_fields["author"]
-            title = book_fields["title"]
-            year = book_fields["year"]
-            publisher = book_fields["publisher"]
-            address = book_fields["address"]
+            book = Book(
+                key=key,
+                author=book_fields["author"],
+                title=book_fields["title"],
+                year=book_fields["year"],
+                publisher=book_fields["publisher"],
+                address=book_fields["address"],
+            )
 
-            yield key, author, title, year, publisher, address
+            yield book
 
     def delete_references(self, reference_keys):
         for key in reference_keys:
@@ -159,7 +155,13 @@ class Transaction:
 
     def get_bibtex(self):
         bibtex_content = ""
-        for key, author, title, journal, year, _, _, _, _, _ in self.get_articles():
-            bibtex_content += self.bibtex_of_article(key, author, title, journal, year)
+        for article in self.get_articles():
+            bibtex_content += self.bibtex_of_article(
+                article.key,
+                article.author,
+                article.title,
+                article.journal,
+                article.year,
+            )
             bibtex_content += "\n\n"
         return bibtex_content
