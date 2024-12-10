@@ -96,7 +96,7 @@ def submit_delete():
 def edit_form(reference=None, key=None):
     articles = list(transaction.get_articles())
     books = list(transaction.get_books())
-    eid = transaction.db_handle.get_key_of(key)
+    eid = transaction.db_handle.get_id_of(key)
     entry_data = transaction.db_handle.get_fields_of(eid)
     return render_template(
         "edit_form.html",
