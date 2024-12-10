@@ -8,14 +8,13 @@ Asiakas määritteet [täältä](https://ohjelmistotuotanto-hy.github.io/speksi/
 
 Projektin backlog [täältä](https://docs.google.com/spreadsheets/d/1kT_Y4y7KcN3mlNamRc5pwhnNV9R3p1UBAP4W0XShYLs/edit?usp=sharing)
 
-## Käyttöohjeet 26.11.2024
+## Käyttöohjeet 10.12.2024
 
 Komentorivillä tässä hakemistossa:
 
 - `poetry install`
-- ./setup_app.sh
-- sulje sovellus painamalla ctr+c näppäimiä yhtä aikaa kun olet valmis
-- kentät ovat muuten vapaita muotoilultaan, mutta kirjoittajatieto tulee merkitä pelkästään a-z/A-Z merkeillä ja vähintään yhdellä välilyönnillä ja vuosi pitää ilmoittaa kokonaislukuna
+- `./setup_app.sh`
+- sulje sovellus painamalla `ctrl+c` näppäimiä yhtä aikaa kun olet valmis
 
 ## Definition of Done
 
