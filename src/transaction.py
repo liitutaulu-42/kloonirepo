@@ -139,6 +139,13 @@ class Transaction:
 
             yield key, author, title, year, publisher, address
 
+    def delete_entries(self, reference_keys):
+        for key in reference_keys:
+            eid = self.db_handle.get_id_of(key)
+            self.db_handle.delete_fields_of(eid)
+            self.db_handle.delete_entry(eid)
+            self.db_handle.commit()
+
     def get_bibtex(self):
         bibtex_content = ""
         for key, author, title, journal, year, _, _, _, _, _ in self.get_articles():

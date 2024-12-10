@@ -45,11 +45,10 @@ class DatabaseHandle:
         eid = execution.scalar()
         return eid
 
-    def delete_entry(self, key):
-        eid = self.get_id_of(key)
+    def delete_fields_of(self, eid):
         sql = text("DELETE FROM fields WHERE owner_id=:id")
         self.database.session.execute(sql, {"id": eid})
-        self.database.session.commit()
+
+    def delete_entry(self, eid):
         sql = text("DELETE FROM entries WHERE id=:id")
         self.database.session.execute(sql, {"id": eid})
-        self.database.session.commit()
