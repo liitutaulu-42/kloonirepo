@@ -17,44 +17,41 @@ def index():
         "index.html", article_content=articles, book_content=books, is_index=True
     )
 
-
-@app.route("/submit/<reference>", methods=["POST"])
 # lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
 # ja työntää ne tietokantaan ja lopuksi palauttaa takaisin samalle lomakkeelle
-def submit(reference):
-    if reference == "article":
-        try:
-            transaction.insert_article(
-                author=request.form.get("author"),
-                title=request.form.get("title"),
-                journal=request.form.get("journal"),
-                year=request.form.get("year"),
-                volume=request.form.get("volume"),
-                month=request.form.get("month"),
-                number=request.form.get("number"),
-                pages=request.form.get("pages"),
-                note=request.form.get("note"),
-            )
-            flash("Artikkeli lisätty onnistuneesti")
-            return redirect("/form/article")
-        except AssertionError as error:
-            flash(str(error))
-            return redirect("/form/article")
-    elif reference == "book":
-        try:
-            transaction.insert_book(
-                author=request.form.get("author"),
-                title=request.form.get("title"),
-                year=request.form.get("year"),
-                publisher=request.form.get("publisher"),
-                address=request.form.get("address"),
-            )
-            flash("Kirja lisätty onnistuneesti")
-            return redirect("/form/book")
-        except AssertionError as error:
-            flash(str(error))
-            return redirect("/form/book")
-    return redirect("/form")
+@app.route("/submit/article", methods=["POST"])
+def submit_article():
+    try:
+        transaction.insert_article(
+            author=request.form.get("author"),
+            title=request.form.get("title"),
+            journal=request.form.get("journal"),
+            year=request.form.get("year"),
+            volume=request.form.get("volume"),
+            month=request.form.get("month"),
+            number=request.form.get("number"),
+            pages=request.form.get("pages"),
+            note=request.form.get("note"),
+        )
+        flash("Artikkeli lisätty onnistuneesti")
+    except AssertionError as error:
+        flash(str(error))
+    return redirect("/form/article")
+
+@app.route("/submit/book", methods=["POST"])
+def submit():
+    try:
+        transaction.insert_book(
+            author=request.form.get("author"),
+            title=request.form.get("title"),
+            year=request.form.get("year"),
+            publisher=request.form.get("publisher"),
+            address=request.form.get("address"),
+        )
+        flash("Kirja lisätty onnistuneesti")
+    except AssertionError as error:
+        flash(str(error))
+    return redirect("/form/book")
 
 
 @app.route("/form/<reference>", methods=["GET"])
