@@ -120,3 +120,11 @@ class TestTransaction(unittest.TestCase):
             any_order=True,
         )
         self.database_handle.commit.assert_called_once()
+
+    def test_delete_references(self):
+        self.database_handle.get_id_of.return_value = 1
+        self.transaction.delete_references(["A-B-9999"])
+        self.database_handle.get_id_of.assert_called_once_with("A-B-9999")
+        self.database_handle.delete_fields_of.assert_called_once_with(1)
+        self.database_handle.delete_entry(1)
+        self.database_handle.commit.assert_called_once()
