@@ -94,11 +94,11 @@ class Transaction:
             journal = article_fields["journal"]
             title = article_fields["title"]
             year = article_fields["year"]
-            month = article_fields.get("month", "-")
-            volume = article_fields.get("volume", "-")
-            number = article_fields.get("number", "-")
-            pages = article_fields.get("pages", "-")
-            note = article_fields.get("note", "-")
+            month = article_fields.get("month", "")
+            volume = article_fields.get("volume", "")
+            number = article_fields.get("number", "")
+            pages = article_fields.get("pages", "")
+            note = article_fields.get("note", "")
             yield (
                 key,
                 author,
@@ -146,16 +146,20 @@ class Transaction:
             self.db_handle.delete_entry(eid)
         self.db_handle.commit()
 
+    @staticmethod
+    def bibtex_of_article(key, author, title, journal, year):
+        return (
+            f"@article{{{key},\n"
+            f"\tauthor = {{{author}}},\n"
+            f"\ttitle = {{{title}}},\n"
+            f"\tjournal = {{{journal}}},\n"
+            f"\tyear = {year}\n"
+            "}"
+        )
+
     def get_bibtex(self):
         bibtex_content = ""
         for key, author, title, journal, year, _, _, _, _, _ in self.get_articles():
-            ref_bibtex = (
-                f"@article{{{key},\n"
-                f"\tauthor = {{{author}}},\n"
-                f"\ttitle = {{{title}}},\n"
-                f"\tjournal = {{{journal}}},\n"
-                f"\tyear = {year}\n"
-                "}"
-            )
-            bibtex_content += ref_bibtex + "\n\n"
+            bibtex_content += self.bibtex_of_article(key, author, title, journal, year)
+            bibtex_content += "\n\n"
         return bibtex_content
