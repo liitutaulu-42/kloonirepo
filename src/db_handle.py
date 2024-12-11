@@ -27,7 +27,7 @@ class DatabaseHandle:
         self.database.session.execute(sql, {"id": eid, "field": field, "value": value})
 
     def get_references(self, reference):
-        sql = text("SELECT id, key " + "FROM entries " + "WHERE entry=:reference")
+        sql = text("SELECT id, key FROM entries WHERE entry=:reference")
         references = self.database.session.execute(sql, {"reference": reference})
 
         for eid, key in references:
