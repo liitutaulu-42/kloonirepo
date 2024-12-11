@@ -11,7 +11,7 @@ class Transaction:
         # Kirjoittajakentällä on esitysmuodot:
         # 1. {Etunimet Sukunimi}
         # 2. {Sukunimi, Etunimet}
-        # 3. {Sukunimi, Liite, Etunimet}
+        # 3. {Sukunimi, viite, Etunimet}
         # tai kun on monta kirjoittajaa: kirjoittaja AND kirjoittaja
 
         # Koodi käyttää regexiä ja formaattimerkkijonoja lomitusten, joka
@@ -26,7 +26,7 @@ class Transaction:
         # tämä käsittelee 1. esitysmuodon
         firsts_last = f"{first_names} {name}"
         # tämä loput eli 2. ja 3. esitysmuodot.
-        # liite esiintyy välillä, niin se on helppo kuvata regexillä
+        # viite esiintyy välillä, niin se on helppo kuvata regexillä
         comma_separated = f"{name}(, {name})?, {first_names}"
         # sitten yhdistetään esiintymismuodot
         both_patterns = f"({firsts_last}|{comma_separated})"
@@ -150,27 +150,27 @@ class Transaction:
                 for field in fields
                 if getattr(ref, field) is not None
             )
+
         texts = show_fields("\t%s = {%s}", textfields)
         numbers = show_fields("\t%s = %s", numfields)
-        return (
-            f"@{ref_type}{{{ref.key},\n"
-            f"{texts},\n"
-            f"{numbers}\n"
-            "}"
-        )
+        return f"@{ref_type}{{{ref.key},\n" f"{texts},\n" f"{numbers}\n" "}"
 
     def get_bibtex(self, is_wanted=lambda _: True):
         bibtex_content = ""
         for article in self.get_articles():
             if is_wanted(article.key):
-                bibtex_content += self.bibtex_of("article", article,
+                bibtex_content += self.bibtex_of(
+                    "article",
+                    article,
                     textfields=["title", "author", "journal", "month", "note"],
                     numfields=["year", "volume", "number"],
                 )
                 bibtex_content += "\n\n"
         for book in self.get_books():
             if is_wanted(book.key):
-                bibtex_content += self.bibtex_of("book", book,
+                bibtex_content += self.bibtex_of(
+                    "book",
+                    book,
                     textfields=["author", "title", "publisher", "address"],
                     numfields=["year"],
                 )
@@ -179,17 +179,17 @@ class Transaction:
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     def update_article(
-            self,
-            eid,
-            author,
-            title,
-            journal,
-            year,
-            month="",
-            volume="",
-            number="",
-            pages="",
-            note="",
+        self,
+        eid,
+        author,
+        title,
+        journal,
+        year,
+        month="",
+        volume="",
+        number="",
+        pages="",
+        note="",
     ):
         self.validate_author(author)
         self.validate_year(year)

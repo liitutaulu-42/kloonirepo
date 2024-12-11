@@ -143,7 +143,7 @@ User sees that a book with missing mandatory fields can not be submitted
 User can navigate to a reference deletion menu
     Go To  ${HOME_URL}
     Click Button  Poista viite
-    Page Should Contain  Poista valitut liitteet
+    Page Should Contain  Poista valitut viitteet
 
 User sees a checkbox to delete reference entries on the deletion page
     Go To  ${HOME_URL}
@@ -155,5 +155,5 @@ User can delete reference entries
     Click Button  Poista viite
     Page Should Contain Checkbox  name=selected
     Select Checkbox  Kirjoittaja-Otsikko-2024
-    Click Button  Poista valitut liitteet
+    Click Button  Poista valitut viitteet
     Page Should Contain  Valitut artikkelit poistettu

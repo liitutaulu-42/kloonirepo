@@ -3,11 +3,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h3>Poista liitteitä</h3>
+<h3>Poista viitteitä</h3>
 
 <aside>
   <form action="/submit-delete" method="post">
-    <button type="submit">Poista valitut liitteet</button>
+    <button type="submit">Poista valitut viitteet</button>
     {% call(key) article_table(article_content) %}
     <input type="checkbox" name="selected", value="{{ key }}">Artikkeli
     {% endcall %}
