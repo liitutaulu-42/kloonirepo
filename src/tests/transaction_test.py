@@ -78,7 +78,7 @@ class TestTransaction(unittest.TestCase):
             )
 
     def test_insert_article_values_same_as_bibtex(self):
-        self.database_handle.get_references.return_value = ((0, "testi"),)
+        self.database_handle.get_references.side_effect = [[(0, "testi")], []]
         self.database_handle.get_fields_of.return_value = {
             "author": "Kirjoittaja Nimi",
             "journal": "J",

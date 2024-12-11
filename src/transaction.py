@@ -143,25 +143,34 @@ class Transaction:
         self.db_handle.commit()
 
     @staticmethod
-    def bibtex_of_article(key, author, title, journal, year):
+    def bibtex_of(ref_type, ref, textfields, numfields):
+        def show_fields(look, fields):
+            return ",\n".join(
+                look % (field, getattr(ref, field))
+                for field in fields
+                if getattr(ref, field) is not None
+            )
+        texts = show_fields("\t%s = {%s}", textfields)
+        numbers = show_fields("\t%s = %s", numfields)
         return (
-            f"@article{{{key},\n"
-            f"\tauthor = {{{author}}},\n"
-            f"\ttitle = {{{title}}},\n"
-            f"\tjournal = {{{journal}}},\n"
-            f"\tyear = {year}\n"
+            f"@{ref_type}{{{ref.key},\n"
+            f"{texts},\n"
+            f"{numbers}\n"
             "}"
         )
 
     def get_bibtex(self):
         bibtex_content = ""
         for article in self.get_articles():
-            bibtex_content += self.bibtex_of_article(
-                article.key,
-                article.author,
-                article.title,
-                article.journal,
-                article.year,
+            bibtex_content += self.bibtex_of("article", article,
+                textfields=["title", "author", "journal", "month", "note"],
+                numfields=["year", "volume", "number"],
+            )
+            bibtex_content += "\n\n"
+        for book in self.get_books():
+            bibtex_content += self.bibtex_of("book", book,
+                textfields=["author", "title", "publisher", "address"],
+                numfields=["year"],
             )
             bibtex_content += "\n\n"
         return bibtex_content
