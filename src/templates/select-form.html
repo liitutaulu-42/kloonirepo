@@ -1,0 +1,21 @@
+{% from 'reference-table.html' import article_table, book_table %}
+
+{% extends "layout.html" %}
+
+{% block body %}
+<h3>Poista liitteitä</h3>
+
+<aside>
+  <form action="/submit_selected" method="post">
+    <button type="submit">Lataa BibTex tiedosto valituista</button>
+    {% call(key) article_table(articles) %}
+    <input type="checkbox" name="selected", value="{{ key }}">Artikkeli
+    {% endcall %}
+    {% call(key) book_table(books) %}
+    <input type="checkbox" name="selected", value="{{ key }}">Kirja
+    {% endcall %}
+  </form>
+
+</aside>
+
+{% endblock %}

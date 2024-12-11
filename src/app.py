@@ -86,6 +86,28 @@ def submit_delete():
     flash("Valitut artikkelit poistettu")
     return redirect("/")
 
+@app.route("/select")
+def select():
+    return render_template(
+        "select-form.html",
+        articles=list(transaction.get_articles()),
+        books=list(transaction.get_books()),
+        is_index=False
+    )
+
+
+@app.route("/submit_selected", methods=["POST"])
+def submit_selected():
+    reference_keys = request.form.getlist("selected")
+    bibtex_content = transaction.get_bibtex_of(reference_keys)
+
+    response = Response(bibtex_content, mimetype="text/plain")
+    response.headers["Content-Disposition"] = (
+        'attachment; filename="viitteet.bib"'
+    )
+    return response
+    
+
 
 @app.route("/edit_form")
 @app.route("/edit_form/<reference>/<key>")
