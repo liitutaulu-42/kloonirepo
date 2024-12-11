@@ -1,11 +1,16 @@
-<h3>Lisää kirja</h3>
-
-<form action="/submit/book" method="post">
+{% if edit_data %}
+<h3>Muokkaa tietoja</h3>
+<form action="/submit_edit" method="post">
+  {% else %}
+  <h3>Lisää kirja</h3>
+  <form action="/submit/book" method="post">
+    {% endif %}
   <h4>Pakolliset kentät:</h4>
-  <p><input type="text" name="title" placeholder="otsikko" required></p>
-  <p><input type="text" name="author" placeholder="kirjoittaja" required></p>
-  <p><input type="text" name="year" placeholder="vuosi" required></p>
-  <p><input type="text" name="publisher" placeholder="julkaisija" required></p>
-  <p><input type="text" name="address" placeholder="julkaisijan postiosoite" required></p>
+  <p><input type="hidden" name="eid" value="{{ edit_data.key if edit_data else '' }}"></p>
+  <p><input type="text" name="title" placeholder="otsikko" value="{{ edit_data.title if edit_data else '' }}" required></p>
+  <p><input type="text" name="author" placeholder="kirjoittaja" value="{{ edit_data.author if edit_data else '' }}" required></p>
+  <p><input type="text" name="year" placeholder="vuosi" value="{{ edit_data.year if edit_data else '' }}" required></p>
+  <p><input type="text" name="publisher" placeholder="julkaisija" value="{{ edit_data.publisher if edit_data else '' }}" required></p>
+  <p><input type="text" name="address" placeholder="julkaisijan postiosoite" value="{{ edit_data.address if edit_data else '' }}" required></p>
   <p><button type="submit">Lähetä</button></p>
 </form>

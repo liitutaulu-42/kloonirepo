@@ -1,16 +1,21 @@
-<h3>Lisää artikkeli</h3>
-
-<form action="/submit/article" method="post">
+{% if edit_data %}
+<h3>Muokkaa tietoja</h3>
+<form action="/submit_edit" method="post">
+  {% else %}
+  <h3>Lisää artikkeli</h3>
+  <form action="/submit/article" method="post">
+    {% endif %}
   <h4>Pakolliset kentät:</h4>
-  <p><input type="text" name="title" placeholder="otsikko" required></p>
-  <p><input type="text" name="author" placeholder="kirjoittaja" required></p>
-  <p><input type="text" name="year" placeholder="vuosi" required></p>
-  <p><input type="text" name="journal" placeholder="julkaisu" required></p>
+  <p><input type="hidden" name="eid" value="{{ edit_data.key if edit_data else '' }}"></p>
+  <p><input type="text" name="title" placeholder="otsikko" value="{{ edit_data.title if edit_data else '' }}" required></p>
+  <p><input type="text" name="author" placeholder="kirjoittaja" value="{{ edit_data.author if edit_data else '' }}" required></p>
+  <p><input type="text" name="year" placeholder="vuosi" value="{{ edit_data.year if edit_data else '' }}" required></p>
+  <p><input type="text" name="journal" placeholder="julkaisu" value="{{ edit_data.journal if edit_data else '' }}" required></p>
   <h4>Vaihtoehtoiset kentät:</h4>
-  <p><input type="text" name="month" placeholder="kuukausi"></p>
-  <p><input type="text" name="volume" placeholder="vuosikerta"></p>
-  <p><input type="text" name="number" placeholder="julkaisuluku"></p>
-  <p><input type="text" name="pages" placeholder="sivut"></p>
-  <p><input type="text" name="note" placeholder="lisätiedot"></p>
+  <p><input type="text" name="month" placeholder="kuukausi" value="{{ edit_data.month if edit_data else '' }}"></p>
+  <p><input type="text" name="volume" placeholder="vuosikerta" value="{{ edit_data.volume if edit_data else '' }}"></p>
+  <p><input type="text" name="number" placeholder="julkaisuluku" value="{{ edit_data.number if edit_data else '' }}"></p>
+  <p><input type="text" name="pages" placeholder="sivut" value="{{ edit_data.pages if edit_data else '' }}"></p>
+  <p><input type="text" name="note" placeholder="lisätiedot" value="{{ edit_data.note if edit_data else '' }}"></p>
   <p><button type="submit">Lähetä</button></p>
 </form>

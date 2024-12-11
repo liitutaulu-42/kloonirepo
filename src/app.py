@@ -118,7 +118,7 @@ def edit_form(reference=None, key=None):
     return render_template(
         "edit_form.html",
         edit_data=entry_data,
-        content_type=reference,
+        form_type=reference,
         article_content=articles,
         book_content=books,
         is_index=False
