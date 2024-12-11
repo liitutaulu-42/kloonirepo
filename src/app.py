@@ -124,6 +124,42 @@ def edit_form(reference=None, key=None):
         is_index=False
     )
 
+@app.route("/submit_edit", methods=["POST"])
+def submit_edit():
+    eid = request.form.get("eid")
+    entry_type = request.form.get("content_type")
+    if entry_type == "article":
+        try:
+            transaction.update_article(
+                eid,
+                author=request.form.get("author"),
+                title=request.form.get("title"),
+                journal=request.form.get("journal"),
+                year=request.form.get("year"),
+                volume=request.form.get("volume"),
+                month=request.form.get("month"),
+                number=request.form.get("number"),
+                pages=request.form.get("pages"),
+                note=request.form.get("note"),
+            )
+        except AssertionError as error:
+            flash(str(error))
+            return redirect("/")
+    else:
+        try:
+            transaction.update_book(
+                eid,
+                author=request.form.get("author"),
+                title=request.form.get("title"),
+                year=request.form.get("year"),
+                publisher=request.form.get("publisher"),
+                address=request.form.get("address"),
+            )
+        except AssertionError as error:
+            flash(str(error))
+            return redirect("/")
+    flash("Tiedot muutettu onnistuneesti")
+    return redirect("/")
 
 @app.route("/bibtex", methods=["GET"])
 # lataa bibtex tiedoston

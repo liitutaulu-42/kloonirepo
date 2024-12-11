@@ -52,3 +52,9 @@ class DatabaseHandle:
     def delete_entry(self, eid):
         sql = text("DELETE FROM entries WHERE id=:id")
         self.database.session.execute(sql, {"id": eid})
+        self.database.session.commit()
+
+    def update_fields(self, eid, field, value):
+        sql = text("UPDATE fields SET field=:field = value=:value WHERE owner_id=:eid")
+        self.database.session.execute(sql, {"field": field, "value": value, "eid": eid})
+        self.database.session.commit()
