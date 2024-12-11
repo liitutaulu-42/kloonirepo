@@ -159,36 +159,17 @@ class Transaction:
             "}"
         )
 
-    def get_bibtex(self):
+    def get_bibtex(self, is_wanted=lambda _: True):
         bibtex_content = ""
         for article in self.get_articles():
-            bibtex_content += self.bibtex_of("article", article,
-                textfields=["title", "author", "journal", "month", "note"],
-                numfields=["year", "volume", "number"],
-            )
-            bibtex_content += "\n\n"
-        for book in self.get_books():
-            bibtex_content += self.bibtex_of("book", book,
-                textfields=["author", "title", "publisher", "address"],
-                numfields=["year"],
-            )
-            bibtex_content += "\n\n"
-        return bibtex_content
-
-    def get_bibtex_of(self, reference_keys):
-        # tämä voitaisiin uudelleen kirjoittaa muotoon, jossa sql puolella
-        # haetaan vain halutut viitteet
-        wanted = set(reference_keys)
-        bibtex_content = ""
-        for article in self.get_articles():
-            if article.key in wanted:
+            if is_wanted(article.key):
                 bibtex_content += self.bibtex_of("article", article,
                     textfields=["title", "author", "journal", "month", "note"],
                     numfields=["year", "volume", "number"],
                 )
                 bibtex_content += "\n\n"
         for book in self.get_books():
-            if book.key in wanted:
+            if is_wanted(book.key):
                 bibtex_content += self.bibtex_of("book", book,
                     textfields=["author", "title", "publisher", "address"],
                     numfields=["year"],

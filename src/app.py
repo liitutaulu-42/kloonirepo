@@ -98,8 +98,9 @@ def select():
 
 @app.route("/submit_selected", methods=["POST"])
 def submit_selected():
-    reference_keys = request.form.getlist("selected")
-    bibtex_content = transaction.get_bibtex_of(reference_keys)
+    reference_keys = set(request.form.getlist("selected"))
+    is_selected = lambda key: key in reference_keys
+    bibtex_content = transaction.get_bibtex(is_selected)
 
     response = Response(bibtex_content, mimetype="text/plain")
     response.headers["Content-Disposition"] = (
