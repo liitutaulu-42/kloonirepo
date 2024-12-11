@@ -157,3 +157,26 @@ User can delete reference entries
     Select Checkbox  Kirjoittaja-Otsikko-2024
     Click Button  Poista valitut viitteet
     Page Should Contain  Valitut artikkelit poistettu
+
+User can select and delete multiple reference entries at once
+    Go To  ${HOME_URL}
+    Click Button  Valitse viitteet
+    Select Checkbox  Kirjoittaja-Otsikko-2025
+    Select Checkbox  Kirjoittaja-Otsikko-2026
+    Click Button  Poista valitut viitteet
+    Page Should Contain  Valitut artikkelit poistettu
+
+User can navigate between program subpages using the top menu buttons
+    Go To  ${HOME_URL}
+    Page Should Contain  Tervetuloa lähdeviiteohjelmaan
+    Click Button  Lisää artikkeli
+    Page Should Contain  Lisää artikkeli
+    Click Button  Lisää kirja
+    Page Should Contain  Lisää kirja
+    Click Button  Poista viite
+    Page Should Contain Button  Poista valitut liitteet
+    Click Button  Valitse viitteet
+    Page Should Contain Button  Lataa BibTex tiedosto valituista viitteistä
+    Page Should Contain Button  Poista valitut viitteet
+    Click Button  Etusivulle
+    Page Should Contain  Tervetuloa lähdeviiteohjelmaan
