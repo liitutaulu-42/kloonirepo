@@ -3,11 +3,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h3>Poista liitteitä</h3>
-
 <aside>
   <form action="/submit_selected" method="post">
-    <button type="submit">Lataa BibTex tiedosto valituista</button>
+    <button type="submit">Lataa BibTex tiedosto valituista viitteistä</button>
+    <button type="submit" formaction="/submit-delete">
+    Poista valitut viitteet
+    </button>
     {% call(key) article_table(articles) %}
     <input type="checkbox" name="selected", value="{{ key }}">Artikkeli
     {% endcall %}
@@ -15,7 +16,5 @@
     <input type="checkbox" name="selected", value="{{ key }}">Kirja
     {% endcall %}
   </form>
-
 </aside>
-
 {% endblock %}
