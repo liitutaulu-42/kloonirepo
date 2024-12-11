@@ -127,13 +127,13 @@ def edit_form(reference=None, key=None):
 
 @app.route("/submit_edit", methods=["POST"])
 def submit_edit():
-    eid = request.form.get("eid")
-    key = transaction.db_handle.get_id_of(eid)
+    key = request.form.get("key")
+    eid = transaction.db_handle.get_id_of(key)
     entry_type = request.form.get("form_type")
     if entry_type == "article":
         try:
             transaction.update_article(
-                key,
+                eid,
                 author=request.form.get("author"),
                 title=request.form.get("title"),
                 journal=request.form.get("journal"),
@@ -150,7 +150,7 @@ def submit_edit():
     else:
         try:
             transaction.update_book(
-                key,
+                eid,
                 author=request.form.get("author"),
                 title=request.form.get("title"),
                 year=request.form.get("year"),
