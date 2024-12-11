@@ -128,3 +128,24 @@ class TestTransaction(unittest.TestCase):
         self.database_handle.delete_fields_of.assert_called_once_with(1)
         self.database_handle.delete_entry(1)
         self.database_handle.commit.assert_called_once()
+
+    def test_insert_book_values_same_as_bibtex(self):
+        self.database_handle.get_references.side_effect = [[], [(0, "testi")]]
+        self.database_handle.get_fields_of.return_value = {
+            "author": "Kirjoittaja Nimi",
+            "title": "Testi Otsikko",
+            "year": "2024",
+            "publisher": "Julkaisija",
+            "address": "Osoite",
+        }
+
+        bibtex = self.transaction.get_bibtex()
+
+        self.assertIn("@book{testi,", bibtex)
+        self.assertIn("author = {Kirjoittaja Nimi}", bibtex)
+        self.assertIn("title = {Testi Otsikko}", bibtex)
+        self.assertIn("publisher = {Julkaisija}", bibtex)
+        self.assertIn("year = 2024", bibtex)
+        self.assertIn("address = {Osoite}", bibtex)
+        self.assertIn(",\n\t", bibtex)
+        self.assertIn("\n}", bibtex)
