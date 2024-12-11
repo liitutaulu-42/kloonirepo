@@ -152,3 +152,51 @@ class Transaction:
             )
             bibtex_content += ref_bibtex + "\n\n"
         return bibtex_content
+
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def update_article(
+            self,
+            eid,
+            author,
+            title,
+            journal,
+            year,
+            month="",
+            volume="",
+            number="",
+            pages="",
+            note="",
+    ):
+        self.validate_author(author)
+        self.validate_year(year)
+
+        self.db_handle.update_fields(eid, "author", author)
+        self.db_handle.update_fields(eid, "title", title)
+        self.db_handle.update_fields(eid, "journal", journal)
+        self.db_handle.update_fields(eid, "year", year)
+
+        if month != "":
+            self.db_handle.update_fields(eid, "month", month)
+        if volume != "":
+            self.db_handle.update_fields(eid, "volume", volume)
+        if number != "":
+            self.db_handle.update_fields(eid, "number", number)
+        if pages != "":
+            self.db_handle.update_fields(eid, "pages", pages)
+        if note != "":
+            self.db_handle.update_fields(eid, "note", note)
+
+        self.db_handle.commit()
+
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def update_book(self, eid, author, title, year, publisher, address):
+        self.validate_author(author)
+        self.validate_year(year)
+
+        self.db_handle.update_fields(eid, "author", author)
+        self.db_handle.update_fields(eid, "title", title)
+        self.db_handle.update_fields(eid, "year", year)
+        self.db_handle.update_fields(eid, "publisher", publisher)
+        self.db_handle.update_fields(eid, "address", address)
+
+        self.db_handle.commit()
