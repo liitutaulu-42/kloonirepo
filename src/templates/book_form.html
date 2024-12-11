@@ -6,6 +6,7 @@
   <form action="/submit/book" method="post">
     {% endif %}
   <h4>Pakolliset kentät:</h4>
+  <p><input type="hidden" name="form_type" value="book"></p>
   <p><input type="hidden" name="eid" value="{{ edit_data.key if edit_data else '' }}"></p>
   <p><input type="text" name="title" placeholder="otsikko" value="{{ edit_data.title if edit_data else '' }}" required></p>
   <p><input type="text" name="author" placeholder="kirjoittaja" value="{{ edit_data.author if edit_data else '' }}" required></p>

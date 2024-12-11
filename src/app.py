@@ -117,6 +117,7 @@ def edit_form(reference=None, key=None):
     entry_data = transaction.db_handle.get_fields_of(eid)
     return render_template(
         "edit_form.html",
+        key_value = key,
         edit_data=entry_data,
         form_type=reference,
         article_content=articles,
@@ -127,11 +128,12 @@ def edit_form(reference=None, key=None):
 @app.route("/submit_edit", methods=["POST"])
 def submit_edit():
     eid = request.form.get("eid")
-    entry_type = request.form.get("content_type")
+    key = transaction.db_handle.get_id_of(eid)
+    entry_type = request.form.get("form_type")
     if entry_type == "article":
         try:
             transaction.update_article(
-                eid,
+                key,
                 author=request.form.get("author"),
                 title=request.form.get("title"),
                 journal=request.form.get("journal"),
@@ -148,7 +150,7 @@ def submit_edit():
     else:
         try:
             transaction.update_book(
-                eid,
+                key,
                 author=request.form.get("author"),
                 title=request.form.get("title"),
                 year=request.form.get("year"),
