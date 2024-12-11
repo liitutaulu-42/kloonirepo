@@ -148,12 +148,12 @@ User can navigate to a reference deletion menu
 User sees a checkbox to delete reference entries on the deletion page
     Go To  ${HOME_URL}
     Click Button  Poista viite
-    Page Should Contain Checkbox  name=valitut
+    Page Should Contain Checkbox  name=selected
 
 User can delete reference entries
     Go To  ${HOME_URL}
     Click Button  Poista viite
-    Page Should Contain Checkbox  name=valitut
+    Page Should Contain Checkbox  name=selected
     Select Checkbox  Kirjoittaja-Otsikko-2024
     Click Button  Poista valitut liitteet
     Page Should Contain  Valitut artikkelit poistettu
