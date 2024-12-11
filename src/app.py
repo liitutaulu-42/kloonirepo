@@ -106,7 +106,6 @@ def submit_selected():
         'attachment; filename="viitteet.bib"'
     )
     return response
-    
 
 
 @app.route("/edit_form")
