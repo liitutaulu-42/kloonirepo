@@ -174,7 +174,7 @@ User can navigate between program subpages using the top menu buttons
     Click Button  Lisää kirja
     Page Should Contain  Lisää kirja
     Click Button  Poista viite
-    Page Should Contain Button  Poista valitut liitteet
+    Page Should Contain Button  Poista valitut viitteet
     Click Button  Valitse viitteet
     Page Should Contain Button  Lataa BibTex tiedosto valituista viitteistä
     Page Should Contain Button  Poista valitut viitteet
