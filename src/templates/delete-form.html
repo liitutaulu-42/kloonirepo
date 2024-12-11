@@ -9,10 +9,10 @@
   <form action="/submit-delete" method="post">
     <button type="submit">Poista valitut liitteet</button>
     {% call(key) article_table(article_content) %}
-    <input type="checkbox" name="valitut", value="{{ key }}">Artikkeli
+    <input type="checkbox" name="selected", value="{{ key }}">Artikkeli
     {% endcall %}
     {% call(key) book_table(book_content) %}
-    <input type="checkbox" name="valitut", value="{{ key }}">Kirja
+    <input type="checkbox" name="selected", value="{{ key }}">Kirja
     {% endcall %}
   </form>
 
