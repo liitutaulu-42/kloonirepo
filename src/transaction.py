@@ -222,5 +222,4 @@ class Transaction:
         self.db_handle.update_fields(eid, "year", year)
         self.db_handle.update_fields(eid, "publisher", publisher)
         self.db_handle.update_fields(eid, "address", address)
-
         self.db_handle.commit()

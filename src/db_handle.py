@@ -55,6 +55,8 @@ class DatabaseHandle:
         self.database.session.commit()
 
     def update_fields(self, eid, field, value):
-        sql = text("UPDATE fields SET field=:field, value=:value WHERE owner_id=:eid")
-        self.database.session.execute(sql, {"field": field, "value": value, "eid": eid})
+        sql = text(
+            "UPDATE fields SET value=:value WHERE owner_id=:eid AND field=:field"
+        )
+        self.database.session.execute(sql, {"eid": eid, "field": field, "value": value})
         self.database.session.commit()

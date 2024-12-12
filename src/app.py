@@ -17,6 +17,7 @@ def index():
         "index.html", article_content=articles, book_content=books, is_index=True
     )
 
+
 # lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
 # ja työntää ne tietokantaan ja lopuksi palauttaa takaisin samalle lomakkeelle
 @app.route("/submit/article", methods=["POST"])
@@ -37,6 +38,7 @@ def submit_article():
     except AssertionError as error:
         flash(str(error))
     return redirect("/form/article")
+
 
 @app.route("/submit/book", methods=["POST"])
 def submit():
@@ -64,7 +66,7 @@ def form(reference):
         form_type=reference,
         article_content=articles,
         book_content=books,
-        is_index=False
+        is_index=False,
     )
 
 
@@ -86,13 +88,14 @@ def submit_delete():
     flash("Valitut artikkelit poistettu")
     return redirect("/")
 
+
 @app.route("/select")
 def select():
     return render_template(
         "select-form.html",
         articles=list(transaction.get_articles()),
         books=list(transaction.get_books()),
-        is_index=False
+        is_index=False,
     )
 
 
@@ -102,9 +105,7 @@ def submit_selected():
     bibtex_content = transaction.get_bibtex(reference_keys.__contains__)
 
     response = Response(bibtex_content, mimetype="text/plain")
-    response.headers["Content-Disposition"] = (
-        'attachment; filename="viitteet.bib"'
-    )
+    response.headers["Content-Disposition"] = 'attachment; filename="viitteet.bib"'
     return response
 
 
@@ -117,13 +118,14 @@ def edit_form(reference=None, key=None):
     entry_data = transaction.db_handle.get_fields_of(eid)
     return render_template(
         "edit_form.html",
-        key_value = key,
+        key_value=key,
         edit_data=entry_data,
         form_type=reference,
         article_content=articles,
         book_content=books,
-        is_index=False
+        is_index=False,
     )
+
 
 @app.route("/submit_edit", methods=["POST"])
 def submit_edit():
@@ -147,7 +149,7 @@ def submit_edit():
         except AssertionError as error:
             flash(str(error))
             return redirect("/")
-    else:
+    if entry_type == "book":
         try:
             transaction.update_book(
                 eid,
@@ -162,6 +164,7 @@ def submit_edit():
             return redirect("/")
     flash("Tiedot muutettu onnistuneesti")
     return redirect("/")
+
 
 @app.route("/bibtex", methods=["GET"])
 # lataa bibtex tiedoston

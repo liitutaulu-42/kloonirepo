@@ -22,7 +22,8 @@
 <div id="form-container">
   {% if form_type == "article" %}
     {% include 'article_form.html' %}
-  {% elif form_type == "book" %}
+    {% endif %}  
+  {% if form_type == "book" %}
     {% include 'book_form.html' %}
   {% endif %}
 </div>
