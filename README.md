@@ -8,6 +8,8 @@ Asiakas määritteet [täältä](https://ohjelmistotuotanto-hy.github.io/speksi/
 
 Projektin backlog [täältä](https://docs.google.com/spreadsheets/d/1kT_Y4y7KcN3mlNamRc5pwhnNV9R3p1UBAP4W0XShYLs/edit?usp=sharing)
 
+[Projektin loppuraportti](https://docs.google.com/document/d/1dCTUxKvI1GDZq8kCAqWwGbg6POSfOwl8h67ursCwR-o/edit?usp=sharing)
+
 ## Käyttöohjeet 10.12.2024
 
 Komentorivillä tässä hakemistossa:
