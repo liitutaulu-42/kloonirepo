@@ -180,7 +180,7 @@ class Transaction:
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     def update_article(
         self,
-        eid,
+        key,
         author,
         title,
         journal,
@@ -191,6 +191,8 @@ class Transaction:
         pages="",
         note="",
     ):
+        eid = self.db_handle.get_id_of(key)
+
         self.validate_author(author)
         self.validate_year(year)
 
@@ -213,7 +215,9 @@ class Transaction:
         self.db_handle.commit()
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
-    def update_book(self, eid, author, title, year, publisher, address):
+    def update_book(self, key, author, title, year, publisher, address):
+        eid = self.db_handle.get_id_of(key)
+
         self.validate_author(author)
         self.validate_year(year)
 
