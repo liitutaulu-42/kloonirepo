@@ -142,17 +142,17 @@ User sees that a book with missing mandatory fields can not be submitted
 
 User can navigate to a reference deletion menu
     Go To  ${HOME_URL}
-    Click Button  Poista viite
+    Click Button  Valitse viitteet
     Page Should Contain  Poista valitut viitteet
 
 User sees a checkbox to delete reference entries on the deletion page
     Go To  ${HOME_URL}
-    Click Button  Poista viite
+    Click Button  Valitse viitteet
     Page Should Contain Checkbox  name=selected
 
 User can delete reference entries
     Go To  ${HOME_URL}
-    Click Button  Poista viite
+    Click Button  Valitse viitteet
     Page Should Contain Checkbox  name=selected
     Select Checkbox  Kirjoittaja-Otsikko-2024
     Click Button  Poista valitut viitteet
@@ -173,8 +173,6 @@ User can navigate between program subpages using the top menu buttons
     Page Should Contain  Lisää artikkeli
     Click Button  Lisää kirja
     Page Should Contain  Lisää kirja
-    Click Button  Poista viite
-    Page Should Contain Button  Poista valitut viitteet
     Click Button  Valitse viitteet
     Page Should Contain Button  Lataa BibTex tiedosto valituista viitteistä
     Page Should Contain Button  Poista valitut viitteet

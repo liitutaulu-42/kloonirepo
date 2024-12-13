@@ -70,17 +70,8 @@ def form(reference):
     )
 
 
-@app.route("/delete_form", methods=["GET"])
-def delete_form():
-    articles = list(transaction.get_articles())
-    books = list(transaction.get_books())
-    return render_template(
-        "delete_form.html", article_content=articles, book_content=books, is_index=False
-    )
-
-
 @app.route("/submit_delete", methods=["POST"])
-# poista delete_form.html sivulla valitut artikkelit tietokannan tauluista
+# poistaa valitus monivalinta sivulla valitut viitteet
 def submit_delete():
     reference_keys = request.form.getlist("selected")
     transaction.delete_references(reference_keys)
