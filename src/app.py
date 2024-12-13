@@ -18,7 +18,7 @@ def index():
     )
 
 
-# lomakkeen lähetä-nappi vie .../submit sivulle, josta sovellus hakee tiedot
+# lomakkeen lähetä nappi vie .../submit sivulle, josta sovellus hakee tiedot
 # ja työntää ne tietokantaan ja lopuksi palauttaa takaisin samalle lomakkeelle
 @app.route("/submit/article", methods=["POST"])
 def submit_article():
@@ -70,18 +70,17 @@ def form(reference):
     )
 
 
-@app.route("/delete-form", methods=["GET"])
-# delete-form sivu
+@app.route("/delete_form", methods=["GET"])
 def delete_form():
     articles = list(transaction.get_articles())
     books = list(transaction.get_books())
     return render_template(
-        "delete-form.html", article_content=articles, book_content=books, is_index=False
+        "delete_form.html", article_content=articles, book_content=books, is_index=False
     )
 
 
-@app.route("/submit-delete", methods=["POST"])
-# poista delete-form.html sivulla valitut artikkelit tietokannan tauluista
+@app.route("/submit_delete", methods=["POST"])
+# poista delete_form.html sivulla valitut artikkelit tietokannan tauluista
 def submit_delete():
     reference_keys = request.form.getlist("selected")
     transaction.delete_references(reference_keys)
@@ -92,7 +91,7 @@ def submit_delete():
 @app.route("/select")
 def select():
     return render_template(
-        "select-form.html",
+        "select_form.html",
         articles=list(transaction.get_articles()),
         books=list(transaction.get_books()),
         is_index=False,

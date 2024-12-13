@@ -1,4 +1,4 @@
-{% from 'reference-table.html' import article_table, book_table %}
+{% from 'reference_table.html' import article_table, book_table %}
 
 {% extends "layout.html" %}
 
@@ -6,7 +6,7 @@
 <h3>Poista viitteitä</h3>
 
 <aside>
-  <form action="/submit-delete" method="post">
+  <form action="/submit_delete" method="post">
     <button type="submit">Poista valitut viitteet</button>
     {% call(key) article_table(article_content) %}
     <input type="checkbox" name="selected", value="{{ key }}">Artikkeli
