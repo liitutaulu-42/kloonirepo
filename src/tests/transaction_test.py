@@ -149,3 +149,31 @@ class TestTransaction(unittest.TestCase):
         self.assertIn("address = {Osoite}", bibtex)
         self.assertIn(",\n\t", bibtex)
         self.assertIn("\n}", bibtex)
+
+    def test_updating_article(self):
+        self.database_handle.get_id_of.return_value = 1
+        with self.assertRaises(AssertionError):
+            self.transaction.update_article(
+                key="",
+                author="3",
+                title="Title of the Article",
+                journal="A",
+                year="2024",
+            )
+        self.transaction.update_article(
+            key=1,
+            author="BB BB",
+            title="BB BB",
+            journal="BB BB",
+            year="2000",
+        )
+        self.database_handle.update_fields.assert_has_calls(
+            [
+                call(1, "author", "BB BB"),
+                call(1, "title", "BB BB"),
+                call(1, "year", "2000"),
+                call(1, "journal", "BB BB"),
+            ],
+            any_order=True,
+        )
+        self.database_handle.commit.assert_called_once()
