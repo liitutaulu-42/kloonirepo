@@ -34,6 +34,4 @@ Komentorivillä tässä hakemistossa:
 
 ## Muuta tietoa
 
-[suunnitelmatietoa](doc.md)
-
 Lue flaskistä [täältä](https://ohjelmistotuotanto-hy.github.io/flask/) lisää.
