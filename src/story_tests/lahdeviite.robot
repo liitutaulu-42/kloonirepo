@@ -178,3 +178,30 @@ User can navigate between program subpages using the top menu buttons
     Page Should Contain Button  Poista valitut viitteet
     Click Button  Etusivulle
     Page Should Contain  Tervetuloa lähdeviiteohjelmaan
+
+User can edit book reference entries
+    Go To  ${HOME_URL}
+    Click Button  Muokkaa viitettä
+    Click Link  Kirja
+    Page Should Contain  Muokkaa tietoja
+    Input Text  year  2002
+    Click Button  Lähetä
+    Page Should Contain  Tiedot muutettu onnistuneesti
+    Page should Contain  2002
+
+User can edit article reference entries
+    Go To  ${HOME_URL}
+    Click Button  Lisää artikkeli
+    Input Text  title  Otsikko 1
+    Input Text  author  Kirjoittaja A
+    Input Text  year  2024
+    Input Text  journal  Julkaisu 1
+    Click Button  Lähetä
+    Page Should Contain  Kirjoittaja-Otsikko-2024
+    Click Button  Muokkaa viitettä
+    Click Link  Artikkeli
+    Page Should Contain  Muokkaa tietoja
+    Input Text  year  2025
+    Click Button  Lähetä
+    Page Should Contain  Tiedot muutettu onnistuneesti
+    Page should Contain  2025
